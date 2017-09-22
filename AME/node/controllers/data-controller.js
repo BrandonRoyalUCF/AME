@@ -148,10 +148,7 @@ module.exports.postMeeting= function (req, res) {
     
     var meetingPic = Buffer.from(req.body.meetingPic, 'base64');
     
-    req.socket.emit('newMeeting', meetingPic, function(string){
-        console.log(string);
-        
-    })
+    req.socket.emit('newMeeting', 'test');
     
 }
 //////////////////////////////////////////////////////////////////////////////////////////
