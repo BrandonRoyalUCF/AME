@@ -16,9 +16,9 @@ def on_newMeeting(obj):
     #StartRecognition.start(obj)
     
 
-socketIO = SocketIO('localhost', 3001, LoggingNamespace)
+socketIO = SocketIO('localhost', 3005, LoggingNamespace)
 socketIO.on('newMeeting', on_newMeeting)
-socketIO.wait(seconds=1)
+socketIO.wait(seconds=5)
 
 
 
