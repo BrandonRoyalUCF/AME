@@ -46,7 +46,7 @@ module.exports.postInstructor = function(req, res) {
         
         console.log(existingInstructor)
         
-        if(existingInstructor.length == 0){
+        if(existingInstructor == null){
             newInstructor.save(function(err){
                 if (err){
                     res.status(500).send("could not save");
@@ -70,7 +70,7 @@ module.exports.postSection = function(req, res) {
                                   students: [],
                                   meetings: []});
     
-    newSection.save(function(err){
+    newSection.save(function(err, section){
         if(err){
             res.status(500).send("could not save");
         }
@@ -84,7 +84,8 @@ module.exports.postSection = function(req, res) {
 
             var sections = instructor.sections;
 
-            sections.push(req.body.sectionID);
+            sections.push({name: req.body.sectionID,
+                           _id: section._id});
 
             instructor.sections = sections;
 
@@ -125,23 +126,28 @@ module.exports.postStudent = function (req, res) {
                                   studentPortrait: req.body.studentPortrait,
                                   socialData: []});
     
-    newStudent.save();
+    newStudent.save(function (err, student) {
+        
+        console.log('adding student to ' + req.body.sectionID);
     
-    console.log('adding student to ' + req.body.sectionID);
+        Section.findOne({'sectionID': req.body.sectionID}, function(err, section){
+            if (err){
+                res.status(500).send('could not save');
+            }
+
+            var students = section.students;
+
+            students.push({name: student.lastName + ", " + student.firstName,
+                           studentID: student.studentID,
+                           _id: student._id});
+
+            section.students = students;
+
+            section.save();
+        })
+    });
     
-    Section.findOne({'sectionID': req.body.sectionID}, function(err, section){
-        if (err){
-            res.status(500).send('could not save');
-        }
-        
-        var students = section.students;
-        
-        students.push(req.body.studentID);
-        
-        section.students = students;
-        
-        section.save();
-    })
+    
 }
 
 module.exports.postMeeting= function (req, res) {
@@ -171,10 +177,11 @@ module.exports.getInstructor = function(req, res) {
         if (err){
             return res.status(500).send("not werking");
         }
-        
-        res.send(instructor);
+        console.log("sending instructor: " + instructor);
+        res.json(instructor);
     });
 };
+
 
 module.exports.getSection = function(req, res) {
     

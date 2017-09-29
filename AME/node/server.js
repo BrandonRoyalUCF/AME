@@ -1,15 +1,8 @@
 var express = require('express');
 var app = express();
-var http = require('http').createServer();
 var bodyparser = require('body-parser');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
-
-var socketio = require('socket.io')(http, {
-    serveClient: false
-})
-
-http.listen(3005)
 
 //Controllers
 var dataController = require("./controllers/data-controller.js");
@@ -28,10 +21,6 @@ app.listen(3000, function(){
 })
 
 var clientSocket = null;
-
-socketio.on('connection', function(socket) {
-    clientSocket = socket;
-})
 
 var secureRoutes = express.Router();
 
