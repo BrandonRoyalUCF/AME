@@ -1,25 +1,4 @@
-from socketIO_client import SocketIO, LoggingNamespace
-import json
+import sys
 
-def on_connect(self):
-    print('[Connected]')
-
-def on_reconnect(self):
-    print('[Reconnected]')
-
-def on_disconnect(self):
-    print('[Disconnected]')
-
-def on_newMeeting(obj):
-    #jsonObject = json.loads(obj)
-    print(obj)
-    #StartRecognition.start(obj)
+sys.stdout.write("data: " + sys.argv[1])
     
-
-socketIO = SocketIO('localhost', 3005, LoggingNamespace)
-socketIO.on('newMeeting', on_newMeeting)
-socketIO.wait(seconds=5)
-
-
-
-

@@ -1,4 +1,6 @@
 var jwt = require('jsonwebtoken');
+var mongoose = require('mongoose');
+const spawn = require('child_process').spawn;
 
 var Instructor = require('../model/Instructor.js');
 var Section = require('../model/Section.js');
@@ -9,18 +11,23 @@ var Student = require('../model/Student.js');
 //HELPER FUNCTIONS
 //////////////////////////////////////////////////////////////////////////////////////////
 
-function sendToken(res, body) {
+function sendToken(res, package) {
     
-    console.log('send token with body:' + body.toString());
+    var body = {};
     
     var token = jwt.sign(body, process.env.SECRET_KEY, {
 		expiresIn: 4000
 	});
-
-	res.json({
+    
+    var json = {
 		success: true,
-		token: token
-	});
+		token: token,
+        package: package
+    };
+    
+    console.log('sending: ' + json.toString());
+
+	res.json(json);
 }
 
 
@@ -58,7 +65,6 @@ module.exports.postInstructor = function(req, res) {
             });
         }
     });
-    
 };
 
 module.exports.postSection = function(req, res) {
@@ -110,13 +116,9 @@ module.exports.postSection = function(req, res) {
                 
                     module.exports.postStudent(req, res);
                 }
-                
             }
         })
     })
-    
-    
-
 }
 
 module.exports.postStudent = function (req, res) {
@@ -146,25 +148,22 @@ module.exports.postStudent = function (req, res) {
             section.save();
         })
     });
-    
-    
 }
 
 module.exports.postMeeting= function (req, res) {
     
-    var meetingPic = Buffer.from(req.body.meetingPic, 'base64');
+    const process = spawn('python', ["C:\AME\AME\python", "input"]);
     
-    req.socket.emit('newMeeting', 'test');
+    process.stdout.on('data', (data) => {
+        console.log(String(data));
+
+    });
+    
     
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 //READ
 //////////////////////////////////////////////////////////////////////////////////////////
-
-module.exports.getKey= function(req, res) {
-    console.log('sent key')
-    res.send(process.env.SECRET_KEY)
-}
 
 module.exports.getInstructor = function(req, res) {
     
@@ -173,26 +172,30 @@ module.exports.getInstructor = function(req, res) {
     console.log('getting' + username);
     
     //TODO GetInstructorById
-    Instructor.find({username: username}, function(err, instructor) {
+    Instructor.findOne({username: username}, function(err, instructor) {
         if (err){
             return res.status(500).send("not werking");
         }
-        console.log("sending instructor: " + instructor);
-        res.json(instructor);
+        sendToken(res, instructor);
     });
 };
 
 
 module.exports.getSection = function(req, res) {
     
-    var sectionID = req.query["sectionID"];
+    var section_id = req.query["section_id"];
     
-    Section.findOne({sectionID: sectionID}, function(err, section) {
+    var id = mongoose.Types.ObjectId(section_id);
+    
+    console.log("finding section with _id:  " + id);
+    
+    Section.findOne({_id: id}, function(err, section) {
         if(err){
+            console.log(err)
             return res.status(500).send("not werking");
         }
         
-        res.send(section);
+        sendToken(res, section);
     })
 }
 

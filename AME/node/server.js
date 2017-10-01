@@ -20,8 +20,6 @@ app.listen(3000, function(){
     console.log('listening on 3000')
 })
 
-var clientSocket = null;
-
 var secureRoutes = express.Router();
 
 //API Calls
@@ -47,10 +45,6 @@ secureRoutes.use((req, res, next) =>{
                 
                 req.decoded = decoded;
                 
-                if(clientSocket){
-                    req.socket = clientSocket;
-                }
-                
                 console.log("next");
                 
 				next();
@@ -66,12 +60,15 @@ app.post('/authenticate', authenticateController.authenticate);
 
 app.post('/instructor', dataController.postInstructor);
 secureRoutes.post('/section', dataController.postSection);
-
+secureRoutes.post('/student', dataController.postStudent);
+secureRoutes.post('/meeting', dataController.postMeeting);
 
 //READ
 
-app.get('/key', dataController.getKey)
 secureRoutes.get('/instructor', dataController.getInstructor);
+secureRoutes.get('/section', dataController.getSection);
+secureRoutes.get('/meeting', dataController.getMeeting);
+secureRoutes.get('/student', dataController.getStudent);
 
 //UPDATE
 
