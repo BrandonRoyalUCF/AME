@@ -1,15 +1,8 @@
 var express = require('express');
 var app = express();
-var http = require('http').createServer();
 var bodyparser = require('body-parser');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
-
-var socketio = require('socket.io')(http, {
-    serveClient: false
-})
-
-http.listen(3005)
 
 //Controllers
 var dataController = require("./controllers/data-controller.js");
@@ -25,12 +18,6 @@ mongoose.connect(process.env.MONGOOSE_CONNECT);
 
 app.listen(3000, function(){
     console.log('listening on 3000')
-})
-
-var clientSocket = null;
-
-socketio.on('connection', function(socket) {
-    clientSocket = socket;
 })
 
 var secureRoutes = express.Router();
@@ -58,10 +45,6 @@ secureRoutes.use((req, res, next) =>{
                 
                 req.decoded = decoded;
                 
-                if(clientSocket){
-                    req.socket = clientSocket;
-                }
-                
                 console.log("next");
                 
 				next();
@@ -77,12 +60,15 @@ app.post('/authenticate', authenticateController.authenticate);
 
 app.post('/instructor', dataController.postInstructor);
 secureRoutes.post('/section', dataController.postSection);
-
+secureRoutes.post('/student', dataController.postStudent);
+secureRoutes.post('/meeting', dataController.postMeeting);
 
 //READ
 
-app.get('/key', dataController.getKey)
 secureRoutes.get('/instructor', dataController.getInstructor);
+secureRoutes.get('/section', dataController.getSection);
+secureRoutes.get('/meeting', dataController.getMeeting);
+secureRoutes.get('/student', dataController.getStudent);
 
 //UPDATE
 
