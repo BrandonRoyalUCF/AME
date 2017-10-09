@@ -8,6 +8,7 @@ module.exports = mongoose.model('Student', {
     studentID: String,
     studentPortrait: Buffer,
     socialData: [{section: String, 
-                  relationships: [{student: String, strength: Number}] 
+                  relationships: [{student: String, 
+                                   strength: Number}] 
                  }]
 });
