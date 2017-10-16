@@ -151,15 +151,47 @@ module.exports.postStudent = function (req, res) {
 }
 
 module.exports.postMeeting= function (req, res) {
-    
-    const process = spawn('python', ["C:\AME\AME\python", "input"]);
-    
-    process.stdout.on('data', (data) => {
-        console.log(String(data));
 
-    });
+    var section_id = req.body.section_id;
+
+    var meetingPic = req.body.meetingPic;
+
+    var sectionText = '{ "meetingPic": ' + meetingPic + ', ';
+
+    Section.findOne({_id: section_id}, function(err, section) {
+        if(err){
+            console.log(err);
+            return res.status(500).send("not werking");
+        }
+
+        sectionText.append('[');
+        
+        for( i = 0; i < section.students.length(); i++ ){
+
+            Student.findOne({_id: section.students[i]._id}, function(err, student){
+                if(err){
+                    console.log(err);
+                    return res.status(500).send("not werking");
+                }
+
+                sectionText.append('{"student_id": ' + student._id + ', "studentPic": ' + student.studentPortrait + '}');
+
+                if(i != section.students.length() - 1){
+                    sectionText.append(',');
+                }
+            }
+        }
+
+        sectionText.append(']');
+
+        sectionText.append('}');
+
+        const process = spawn('python', ["C:\AME\AME\python", sectionText]);
     
-    
+        process.stdout.on('data', (data) => {
+            console.log(String(data));
+        });
+    })
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 //READ
