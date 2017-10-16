@@ -1,8 +1,8 @@
 import cv2
 import os
 import numpy
-from PIL import Image
-import matplotlib.pyplot as plt
+#from PIL import Image
+#import matplotlib.pyplot as plt
 
 print(cv2.__version__)
 
@@ -23,6 +23,7 @@ recognizer = cv2.face.LBPHFaceRecognizer_create(radius=1,neighbors=8,grid_x=8,gr
 #print("Found {0} faces!".format(len(faces)))
 
 students = [0]*15  #assume all students are absent first
+numTrainPerFace = [0]*15
 
 #for our visual purposes. has green rectangle around detected faces
 def detectTest():
@@ -45,16 +46,18 @@ def detectAndCrop():
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     faces = faceCascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=10, minSize=(30, 30))
 
-    i=1
+    i=0
     for (x, y, w, h) in faces:
         cropImg = image[y:y+h, x:x+w]
-        cv2.imwrite('trash/face'+str(i)+'.jpg', cropImg)
+        gray = cv2.cvtColor(cropImg, cv2.COLOR_BGR2GRAY)  # turn portrait to grayscale
+        #shrink = cv2.resize(gray, (500, 500))
+        #cv2.imwrite('trash/face'+str(i)+'.jpg', shrink)
         i += 1
 
 
 #train recognizer with the portraits
 def prepareTraining(path):
-    portraitList = [os.path.join(path,f) for f in os.listdir(path)]  #put cropped faces in a list
+    portraitList = [os.path.join(path,f) for f in os.listdir(path)]  #put portrait faces in a list
     portraits = []
     labels = []
 
@@ -73,6 +76,7 @@ def prepareTraining(path):
         #smaller = cv2.resize(array, (0, 0), fx=0.3, fy=0.3)
         smaller = cv2.resize(array, (200,200))
         #cv2.imshow("Adding faces to training...", smaller)
+
         cv2.waitKey(100)
 
     return portraits, labels
@@ -80,42 +84,80 @@ def prepareTraining(path):
 
 #perform face recognition
 def recognize(crop):
+    #matrix = numpy.zeros((15, 15))
     collector = cv2.face.StandardCollector_create()
-    cropList = [os.path.join(crop, f) for f in os.listdir(crop)]  #put cropped faces in a list
+    confMatrix = []
+    getMinConf = []
+    min = 1000
+    size = 0
 
-    count=1
+    cropList = [os.path.join(crop, f) for f in os.listdir(crop)]  #put detected faces in a list
+
+    faceNum=1
     for i in cropList:
+        outerLoop = 0
         cropImg = cv2.imread(i)                           #read in a cropped image
         gray = cv2.cvtColor(cropImg, cv2.COLOR_BGR2GRAY)
         fixSize = cv2.resize(gray, (500,500))
         predictImg = numpy.array(fixSize, 'uint8')        #turn into numpy array
 
         numActual = int(os.path.split(i)[1].split(".")[0])
-        numPredicted, conf = recognizer.predict(predictImg)
-        #recognizer.predict_collect(predictImg,collector)
-        #results = collector.getResults()
+        #numPredicted, conf = recognizer.predict(predictImg)
 
+        recognizer.predict_collect(predictImg, collector)
+        array1D = collector.getResults()
+        print(array1D)
+
+        #get only the confidence value in each tuple
+        getConf = [x for _, x in array1D]
+        print(getConf)
+
+        #find min conf value for each face
+        for j in range(len(getConf)):
+            size += 1
+
+            temp = getConf[j]
+            if(min > temp):
+                min = temp
+
+            if(size == 2):  #2 is numTrainPerFace
+                dist = min
+                getMinConf.append(dist)
+                min=1000
+                size=0
+
+        #print minConf
+        confMatrix.append(getMinConf)
+        getMinConf = []  #empty the list
+        outerLoop += 1
+
+        #newMatrix = numpy.column_stack(getConf)
+        #newMatrix = numpy.stack(getConf)
+        #recognizer.addNums()
+
+        '''
         if numActual == numPredicted:
             print("{} correctly recognized as {}. conf {}".format(numActual, numPredicted, conf))
             students[numPredicted-1] = 1
         else:
             print("{} wrongly recognized as {}. conf {}".format(numActual, numPredicted, conf))
-
-        #student[numPredicted].append(1)
-        #student[numPredicted] = 1
-
-        '''face = os.path.split(cropPath)[1].split(".")[0]
-        numPredicted, conf = recognizer.predict(predictImg)
-        print("{} matched as {} with confidence {}".format(face, numPredicted, conf))
         '''
+
+        ##part of checkPresent
+        #student[numPredicted].append(1)  can use either, i think
+        #student[numPredicted] = 1
 
         bigger = cv2.resize(predictImg, (200, 200))
         #cv2.imshow("Recognizing Face", bigger)
-        #cv2.imwrite('trash/f' + str(j) + '.jpg', bigger)
+        #cv2.imwrite('trash/f' + str(faceNum) + '.jpg', bigger)
         cv2.waitKey(100)
-        count+=1
+        faceNum+=1
 
-    #print("results: ", results)
+    print()
+    #confMatrix = '\n'.join([str(i) for i in confMatrix])
+    confMatrix = numpy.array(confMatrix)  #2d list (list of lists) -> 2d matrix
+    print(confMatrix)
+    print(confMatrix[1][7])
 
 
 def checkPresent():
@@ -127,15 +169,21 @@ def checkPresent():
             print("student {} absent".format(i+1))
 
 
+def numTrainImgPerFace(labels):
+    for i in range(len(labels)):
+        numTrainPerFace[labels[i]] += 1
+    #print(numTrainPerFace)
+
 
 '''Like a Main function below'''
-#detectAndCrop()
+detectAndCrop()
 #detectTest()
 
 path = 'portraits/'
 portraits, labels = prepareTraining(path)
 
 print("portraitLabels:", labels)
+numTrainImgPerFace(labels)
 cv2.destroyAllWindows()
 
 recognizer.train(portraits, numpy.array(labels))
@@ -145,6 +193,16 @@ recognize(crop)
 
 #checkPresent()
 
+
+'''
+print("\n")
+matrix = numpy.zeros((5,5))  #5x5 matrix with all 0's
+print(matrix)
+
+matrix2 = numpy.array([[1,2,3],[7,8,9]])
+print(matrix2)
+print(matrix2[0,2])  #row 0, col 2
+'''
 
 
 
