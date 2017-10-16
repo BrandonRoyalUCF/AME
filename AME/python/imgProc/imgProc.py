@@ -4,12 +4,9 @@ import numpy
 #from PIL import Image
 #import matplotlib.pyplot as plt
 
-print(cv2.__version__)
 
 #imagePath = "portraitsOrig/7.jpg"
-cascPath = "haarcascade_frontalface_default.xml"
-faceCascade = cv2.CascadeClassifier(cascPath)
-recognizer = cv2.face.LBPHFaceRecognizer_create(radius=1,neighbors=8,grid_x=8,grid_y=8)
+
 #recognizer = cv2.face.EigenFaceRecognizer_create()
 #recognizer = cv2.face.FisherFaceRecognizer_create(num_components=10000, threshold=5000)
 
@@ -22,8 +19,8 @@ recognizer = cv2.face.LBPHFaceRecognizer_create(radius=1,neighbors=8,grid_x=8,gr
 
 #print("Found {0} faces!".format(len(faces)))
 
-students = [0]*15  #assume all students are absent first
-numTrainPerFace = [0]*15
+#students = [0]*15  #assume all students are absent first
+#numTrainPerFace = [0]*15
 
 #for our visual purposes. has green rectangle around detected faces
 def detectTest():
@@ -158,6 +155,7 @@ def recognize(crop):
     confMatrix = numpy.array(confMatrix)  #2d list (list of lists) -> 2d matrix
     print(confMatrix)
     print(confMatrix[1][7])
+    return confMatrix
 
 
 def checkPresent():
@@ -174,22 +172,29 @@ def numTrainImgPerFace(labels):
         numTrainPerFace[labels[i]] += 1
     #print(numTrainPerFace)
 
+def mainStart():
 
-'''Like a Main function below'''
-detectAndCrop()
-#detectTest()
+    cascPath = "haarcascade_frontalface_default.xml"
+    faceCascade = cv2.CascadeClassifier(cascPath)
+    recognizer = cv2.face.LBPHFaceRecognizer_create(radius=1,neighbors=8,grid_x=8,grid_y=8)
 
-path = 'portraits/'
-portraits, labels = prepareTraining(path)
+    '''Like a Main function below'''
+    detectAndCrop()
+    #detectTest()
 
-print("portraitLabels:", labels)
-numTrainImgPerFace(labels)
-cv2.destroyAllWindows()
+    path = 'portraits/'
+    portraits, labels = prepareTraining(path)
 
-recognizer.train(portraits, numpy.array(labels))
+    print("portraitLabels:", labels)
+    numTrainImgPerFace(labels)
+    cv2.destroyAllWindows()
 
-crop = 'crops/'
-recognize(crop)
+    recognizer.train(portraits, numpy.array(labels))
+
+    crop = 'crops/'
+    confMatrix = recognize(crop)
+
+    return confMatrix
 
 #checkPresent()
 
