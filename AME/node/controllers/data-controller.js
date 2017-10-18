@@ -110,7 +110,7 @@ module.exports.postSection = function(req, res) {
                     req.body.firstName = students[i].firstName;
                     req.body.lastName = students[i].lastName;
                     req.body.studentID = students[i].studentID;
-                    req.body.studentPortrait = Buffer.from(students[i].studentPortrait, 'base64');
+                    req.body.studentPortrait = students[i].studentPortrait;
                     
                     console.log(req.body.studentPortrait);
                 
@@ -125,7 +125,7 @@ module.exports.postStudent = function (req, res) {
     var newStudent = new Student({firstName: req.body.firstName,
                                   lastName: req.body.lastName,
                                   studentID: req.body.studentID,
-                                  studentPortrait: req.body.studentPortrait,
+                                  studentPortrait: Buffer.from(req.body.studentPortrait, 'base64'),
                                   socialData: []});
     
     newStudent.save(function (err, student) {
@@ -154,7 +154,7 @@ module.exports.postMeeting= function (req, res) {
 
     var section_id = req.body.section_id;
 
-    var meetingPic = req.body.meetingPic;
+    var meetingPic = Buffer.from(req.body.meetingPic, 'base64');
 
     var sectionText = '{ "meetingPic": ' + meetingPic + ', ';
 
