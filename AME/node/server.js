@@ -32,9 +32,14 @@ secureRoutes.use((req, res, next) =>{
     
     console.log("secure request made")
     
+    
+    
 	var token = req.body.token || req.headers['token'] || req.query["token"];
     
-    console.log(token);
+    console.log('body: ' + token);
+    console.log('headers: ' + token);
+    console.log('query: ' + token);
+
 
 	if(token){
 		jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
