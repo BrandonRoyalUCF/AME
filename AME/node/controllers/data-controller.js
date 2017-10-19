@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
-const spawn = require('child_process').spawn;
+const exec = require('child_process').exec;
 
 var Instructor = require('../model/Instructor.js');
 var Section = require('../model/Section.js');
@@ -156,17 +156,22 @@ module.exports.postMeeting= function (req, res) {
 
     var section_id = req.body.section_id;
 
-    var meetingPic = Buffer.from(req.body.meetingPic, 'base64');
+    var meetingPic = Buffer.from(req.body.meetingPic.toString(), 'base64');
     
     var sectionText = '{ "meetingPic": ' + meetingPic + '}';
     
-    const process = spawn('python', ["C:\AME\AME\python", sectionText]);
     
-        console.log('should be done');
     
-        process.stdout.on('data', (data) => {
-            console.log(String(data));
-        });
+    const process = exec('python C:\AME\AME\python\imgProc\match.py ' + sectionText, function (err, stdout, stderr){
+        if (err){
+            console.log(err)
+        }
+        
+        console.log(String(stdout));
+    });
+    
+    
+    console.log('should be done');
 
     var sectionText = '{ "meetingPic": ' + meetingPic + ', ';
 

@@ -31,7 +31,6 @@ module.exports.authenticate = function(req,res){
             return res.status(500).send("not werking");
         }
         
-        console.log(instructor.toString());
         
         dbpassword = instructor.password.toString();
         
