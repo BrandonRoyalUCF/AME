@@ -151,10 +151,22 @@ module.exports.postStudent = function (req, res) {
 }
 
 module.exports.postMeeting= function (req, res) {
+    
+    console.log('postMeeting called');
 
     var section_id = req.body.section_id;
 
     var meetingPic = Buffer.from(req.body.meetingPic, 'base64');
+    
+    var sectionText = '{ "meetingPic": ' + meetingPic + '}';
+    
+    const process = spawn('python', ["C:\AME\AME\python", sectionText]);
+    
+        console.log('should be done');
+    
+        process.stdout.on('data', (data) => {
+            console.log(String(data));
+        });
 
     var sectionText = '{ "meetingPic": ' + meetingPic + ', ';
 
@@ -179,7 +191,7 @@ module.exports.postMeeting= function (req, res) {
                 if(i != section.students.length() - 1){
                     sectionText.append(',');
                 }
-            }
+            })
         }
 
         sectionText.append(']');
@@ -187,6 +199,8 @@ module.exports.postMeeting= function (req, res) {
         sectionText.append('}');
 
         const process = spawn('python', ["C:\AME\AME\python", sectionText]);
+    
+        console.log('should be done');
     
         process.stdout.on('data', (data) => {
             console.log(String(data));
