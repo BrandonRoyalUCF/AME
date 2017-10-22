@@ -162,10 +162,15 @@ module.exports.postMeeting= function (req, res) {
     
     
     
-    const process = exec('python C:\AME\AME\python\imgProc\match.py ' + sectionText, function (err, stdout, stderr){
+    const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/imgProc/match.py ' + sectionText, function (stdout, err, stderr){
         if (err){
-            console.log(err)
+            //console.log(err)
         }
+        if (stderr) {
+            //console.log(stderr)
+        }
+        
+        console.log('no errors')
         
         console.log(String(stdout));
     });
@@ -202,14 +207,6 @@ module.exports.postMeeting= function (req, res) {
         sectionText.append(']');
 
         sectionText.append('}');
-
-        const process = spawn('python', ["C:\AME\AME\python", sectionText]);
-    
-        console.log('should be done');
-    
-        process.stdout.on('data', (data) => {
-            console.log(String(data));
-        });
     })
 }
 //////////////////////////////////////////////////////////////////////////////////////////
