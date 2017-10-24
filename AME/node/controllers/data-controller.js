@@ -25,7 +25,7 @@ function sendToken(res, package) {
         package: package
     };
     
-    console.log('sending: ' + json.toString());
+    console.log('sending: ' + JSON.stringify(json, null, 2));
 
 	res.json(json);
 }
@@ -172,9 +172,35 @@ module.exports.postMeeting= function (req, res) {
             return res.status(500).send('could not save');
         }
         
-        var sectionText = '{\\"meeting_id\\":\\"' + meeting._id + '\\"}';
+        var sectionText = '{\\"meetingPic\\":\\"' + meetingPic + '\\", ';
+
+        Section.findOne({_id: section_id}, function(err, section) {
+            if(err){
+                console.log(err);
+                return res.status(500).send("not werking");
+            }
+
+            sectionText.append('[');
+            
+            for( i = 0; i < section.students.length(); i++ ){
+
+                Student.findOne({_id: section.students[i]._id}, function(err, student){
+                    if(err){
+                        console.log(err);
+                        return res.status(500).send("not werking");
+                    }
+
+                    sectionText.append('{\\"student_id\\":\\"' + student._id + '\\"}');
+
+                    if(i != section.students.length() - 1){
+                        sectionText.append(',');
+                    }
+                })
+            }
+            sectionText.append(']}');
+        })
         
-        
+        console.log(sectionText);
         
         const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/imgProc/match.py ' + sectionText, function (err, stdout, stderr){
             if (err){
@@ -184,50 +210,11 @@ module.exports.postMeeting= function (req, res) {
                 console.log(stderr)
             }
             
-            console.log(String(stdout));
+            console.log(stdout)
         });
     })
-    
-    
-    
-    //console.log(sectionText)
-    
-    
-    
-    
-    console.log('should be done');
-
-    var sectionText = '{ "meetingPic": ' + meetingPic + ', ';
-
-    /*Section.findOne({_id: section_id}, function(err, section) {
-        if(err){
-            console.log(err);
-            return res.status(500).send("not werking");
-        }
-
-        sectionText.append('[');
-        
-        for( i = 0; i < section.students.length(); i++ ){
-
-            Student.findOne({_id: section.students[i]._id}, function(err, student){
-                if(err){
-                    console.log(err);
-                    return res.status(500).send("not werking");
-                }
-
-                sectionText.append('{"student_id": ' + student._id + ', "studentPic": ' + student.studentPortrait + '}');
-
-                if(i != section.students.length() - 1){
-                    sectionText.append(',');
-                }
-            })
-        }
-
-        sectionText.append(']');
-
-        sectionText.append('}');
-    })*/
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //READ
 //////////////////////////////////////////////////////////////////////////////////////////
