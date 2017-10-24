@@ -6,9 +6,11 @@
 # Description: Many to Many Matching for Facial Recognition using Social Circles as a Metric
 # 
 # Change Log:
-#   - Brandon Royal - Initial
-#   - Brandon Royal - Matching Algorithm
-#   - Brandon Royal - Social Data Algorithm
+#   - Brandon Royal - Initial - 
+#   - Brandon Royal - Matching Algorithm - 
+#   - Brandon Royal - Social Data Algorithm - 
+#   - Brandon Royal - Formatting and Organization - 
+#   - Brandon Royal - Changes to work with now local file paths - 10/23/2017
 #
 #############################################################################################################################
 
@@ -76,22 +78,47 @@ class StartRecognition():
     ##############################################################
     def startRecognition(self):
 
-
         arrayStudentIds = self.student_ids
         meeting_id = self.meeting_id
         pathMeetingPic = self.pathMeetingPic
         arrayOfStudentPicPaths = self.arrayOfStudentPicPaths
         directory = self.directory
 
-        confidenceMatrix = mainStart(arrayStudentIds, pathMeetingPic, arrayOfStudentPicPaths, directory)
+        start = imgProc(arrayStudentIds, pathMeetingPic, arrayOfStudentPicPaths, directory)
+        confidenceMatrix = start.startDetectionandRecognition()
 
-        attendance = matchStudents(confidenceMatrix)
+        attendance = matchStudents(confidenceMatrix) #gives us an array where the index is the cropped face and the value is the index of the student id for the db face
 
-        dictionary = dict(zip(arrayStudentIds, attendance)) #{Student_id : attendance (0 or 1)}
+        finalAttendanceDictionary = finalOutput(attendance) #creates a dictionary where the key is the student_id and the value is true/false depending on if they are present
 
-        json_string = json.dumps(dictionary)
+        finalJsonString = createJsonOuput(finalAttendanceDictionary)
+
+        #dictionary = dict(zip(arrayStudentIds, attendance)) #{Student_id : attendance (0 or 1)}
+        #json_string = json.dumps(dictionary)
+
+        return finalJsonString
+
+    def createJsonOutput(self, finalAttendanceDictionary):
+
+        json_string = '{attendance:['
+
+        for key, val in finalAttendanceDictionary.items():
+            json_string = json_string + '{\\"student_id\\":' + str(key) + ',\\"present\\":' + str(val) + '},'
+
+        json_string = json_string[:-1]
+        json_string = json_string + ']}'
 
         return json_string
+
+    def finalOutput(self, finalAttendance, arrayStudentIds):
+        dictionary = {}
+        for val in arrayStudentIds:
+            dictionary[val] = False
+
+        for val in finalAttendance:
+            dictionary[arrayStudentIds[val]] = True
+    
+        return dictionary
 
     ##############################################################
     #FUNCTION: decodeImage
@@ -159,18 +186,17 @@ class StartRecognition():
         numberCropped = len(confidenceMatrix)
 
         #this is the number of total students in the class
-        numberTotalStudents = len(confidenceMatrix[0]) 
-
+        numberTotalStudents = len(confidenceMatrix[0])
 
         #2d matrix that stores the top k matches for each cropped face
         topMatches  = [[-1 for i in range(topMatchesTaken)] for j in range(numberCropped)]
 
-        print(topMatches)
+        #print(topMatches)
         
         #create a copy of the confidence matrix that we can edit the values of for finding the top k matches
         editableConfidenceMatrix = deepcopy(confidenceMatrix)
 
-        print('confidence', confidenceMatrix)
+        #print('confidence', confidenceMatrix)
 
         #for each cropped face find the top j matches and put them into the topMatches array
         #topMatches[i] refers to each cropped face, topMatches[j] refers to the index of a student picture  
@@ -184,8 +210,8 @@ class StartRecognition():
                         bestIndex = k
                 topMatches[i][j] = bestIndex
                 editableConfidenceMatrix[i][bestIndex] = sys.maxsize
-        print('confidence', confidenceMatrix)
-        print(topMatches)
+        #print('confidence', confidenceMatrix)
+        #print(topMatches)
         
         #array to track "final" matches
         finalMatch = [-1 for i in range(numberCropped)]
