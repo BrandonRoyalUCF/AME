@@ -77,7 +77,8 @@ module.exports.postSection = function(req, res) {
                                   meetings: []});
     
     newSection.save(function(err, section){
-        if(err){
+       
+ if(err){
             res.status(500).send("could not save");
         }
         
@@ -134,7 +135,7 @@ module.exports.postStudent = function (req, res) {
     
         Section.findOne({'sectionID': req.body.sectionID}, function(err, section){
             if (err){
-                res.status(500).send('could not save');
+                return res.status(500).send('could not save');
             }
 
             var students = section.students;
@@ -156,31 +157,49 @@ module.exports.postMeeting= function (req, res) {
 
     var section_id = req.body.section_id;
 
-    var meetingPic = Buffer.from(req.body.meetingPic.toString(), 'base64');
-    
-    var sectionText = '{ "meetingPic": ' + meetingPic + '}';
+    var meetingPic = req.body.meetingPic.toString()
     
     
     
-    const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/imgProc/match.py ' + sectionText, function (stdout, err, stderr){
+    var newMeeting = new Meeting({dateTime: 0,
+                                  meetingPic: Buffer.from(meetingPic, 'base64'),
+                                  attendance: [],
+                                  croppedPics: [],
+                                  section_id: section_id});
+                                  
+    newMeeting.save(function(err, meeting){
         if (err){
-            //console.log(err)
-        }
-        if (stderr) {
-            //console.log(stderr)
+            return res.status(500).send('could not save');
         }
         
-        console.log('no errors')
+        var sectionText = '{\\"meeting_id\\":\\"' + meeting._id + '\\"}';
         
-        console.log(String(stdout));
-    });
+        
+        
+        const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/imgProc/match.py ' + sectionText, function (err, stdout, stderr){
+            if (err){
+                console.log(err)
+            }
+            if (stderr) {
+                console.log(stderr)
+            }
+            
+            console.log(String(stdout));
+        });
+    })
+    
+    
+    
+    //console.log(sectionText)
+    
+    
     
     
     console.log('should be done');
 
     var sectionText = '{ "meetingPic": ' + meetingPic + ', ';
 
-    Section.findOne({_id: section_id}, function(err, section) {
+    /*Section.findOne({_id: section_id}, function(err, section) {
         if(err){
             console.log(err);
             return res.status(500).send("not werking");
@@ -207,7 +226,7 @@ module.exports.postMeeting= function (req, res) {
         sectionText.append(']');
 
         sectionText.append('}');
-    })
+    })*/
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 //READ

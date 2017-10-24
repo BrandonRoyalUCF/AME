@@ -33,8 +33,12 @@ from imgProc import *
 
 class StartRecognition():
 
-    def __init__(self, jsonObject):
-        self.json = jsonObject
+    def __init__(self, meeting_id, student_ids, pathMeetingPic, arrayOfStudentPicPaths, directory):
+        self.meeting_id = meeting_id
+        self.student_ids = student_ids
+        self.pathMeetingPic = pathMeetingPic
+        self.arrayOfStudentPicPaths = arrayOfStudentPicPaths
+        self.directory = directory
 
     def genderRecognition(self, pictures):
         print('TODO')
@@ -71,21 +75,19 @@ class StartRecognition():
     #Space Complexity:
     ##############################################################
     def startRecognition(self):
-        jsonObject = json.loads(self.json)
 
-        meetingPic = jsonObject['newMeeting']
-        studentPics = jsonObject['studentPictures']
 
-        decodedMeeting = decodeImage(meetingPic)
-        decodedStudents = decodeArrayOfImages(studentPics)
+        arrayStudentIds = self.student_ids
+        meeting_id = self.meeting_id
+        pathMeetingPic = self.pathMeetingPic
+        arrayOfStudentPicPaths = self.arrayOfStudentPicPaths
+        directory = self.directory
 
-        arrayStudentIds = getStudentIDs(studentPics)
+        confidenceMatrix = mainStart(arrayStudentIds, pathMeetingPic, arrayOfStudentPicPaths, directory)
 
-        confidenceMatrix = getConfidenceValues(decodedMeeting, decodedStudents)
+        attendance = matchStudents(confidenceMatrix)
 
-        attendence = matchStudents(confidenceMatrix)
-
-        dictionary = dict(zip(arrayStudentIds, attendence))
+        dictionary = dict(zip(arrayStudentIds, attendance)) #{Student_id : attendance (0 or 1)}
 
         json_string = json.dumps(dictionary)
 

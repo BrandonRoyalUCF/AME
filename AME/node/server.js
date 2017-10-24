@@ -8,8 +8,8 @@ var jwt = require('jsonwebtoken');
 var dataController = require("./controllers/data-controller.js");
 var authenticateController = require("./controllers/authenticate-controller.js");
 
-app.use(bodyparser.urlencoded({limit: '16mb', extended: true}));
-app.use(bodyparser.json({limit: '16mb'}));
+app.use(bodyparser.urlencoded({limit: '40mb', extended: true}));
+app.use(bodyparser.json({limit: '40mb'}));
 
 var config = require('./config.js');
 config.setConfig();

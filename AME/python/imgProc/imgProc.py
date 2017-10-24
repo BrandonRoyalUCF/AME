@@ -23,6 +23,12 @@ import numpy
 #numTrainPerFace = [0]*15
 
 #for our visual purposes. has green rectangle around detected faces
+
+cascPath = "haarcascade_frontalface_default.xml"
+faceCascade = cv2.CascadeClassifier(cascPath)
+recognizer = cv2.face.LBPHFaceRecognizer_create(radius=1,neighbors=8,grid_x=8,grid_y=8)
+
+
 def detectTest():
     imagePath = "IMG_3123.jpg"
     image = cv2.imread(imagePath)
@@ -37,8 +43,8 @@ def detectTest():
 
 
 #only need to run this. no green rectangles
-def detectAndCrop():
-    imagePath = "10.jpg"
+def detectAndCrop(pathMeetingPic, directory):
+    imagePath = pathMeetingPic
     image = cv2.imread(imagePath)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     faces = faceCascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=10, minSize=(30, 30))
@@ -47,8 +53,8 @@ def detectAndCrop():
     for (x, y, w, h) in faces:
         cropImg = image[y:y+h, x:x+w]
         gray = cv2.cvtColor(cropImg, cv2.COLOR_BGR2GRAY)  # turn portrait to grayscale
-        #shrink = cv2.resize(gray, (500, 500))
-        #cv2.imwrite('trash/face'+str(i)+'.jpg', shrink)
+        shrink = cv2.resize(gray, (500, 500))
+        cv2.imwrite(directory + '//CroppedFaces//face'+str(i)+'.png', shrink)
         i += 1
 
 
@@ -172,17 +178,13 @@ def numTrainImgPerFace(labels):
         numTrainPerFace[labels[i]] += 1
     #print(numTrainPerFace)
 
-def mainStart():
-
-    cascPath = "haarcascade_frontalface_default.xml"
-    faceCascade = cv2.CascadeClassifier(cascPath)
-    recognizer = cv2.face.LBPHFaceRecognizer_create(radius=1,neighbors=8,grid_x=8,grid_y=8)
+def mainStart(arrayStudentIds, pathMeetingPic, arrayOfStudentPicPaths, directory):
 
     '''Like a Main function below'''
-    detectAndCrop()
+    detectAndCrop(pathMeetingPic, directory)
     #detectTest()
 
-    path = 'portraits/'
+    path = directory + '//studentPics'
     portraits, labels = prepareTraining(path)
 
     print("portraitLabels:", labels)
@@ -191,7 +193,7 @@ def mainStart():
 
     recognizer.train(portraits, numpy.array(labels))
 
-    crop = 'crops/'
+    crop = directory + '//CroppedFaces'
     confMatrix = recognize(crop)
 
     return confMatrix

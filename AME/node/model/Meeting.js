@@ -7,5 +7,5 @@ module.exports = mongoose.model('Meeting', {
     meetingPic: Buffer,
     attendance: [{student: String, present: Boolean}],
     croppedPics: [{student: String, pic: Buffer}],
-    section: String
+    section_id: String
 })
