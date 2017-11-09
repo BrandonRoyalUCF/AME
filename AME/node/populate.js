@@ -50,7 +50,7 @@ mongoose.connection.on('open', function(){
                             instructor.sections.push({name: section.sectionID,
                                                 _id: section._id});
                             
-                            //instructor.save()
+                            instructor.save()
                             
                             console.log('Added Section: ' + newSection)
                             

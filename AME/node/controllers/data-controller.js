@@ -169,10 +169,11 @@ module.exports.postMeeting= function (req, res) {
                                   
     newMeeting.save(function(err, meeting){
         if (err){
+            console.log(err)
             return res.status(500).send('could not save');
         }
         
-        var sectionText = '{\\"meetingPic\\":\\"' + meetingPic + '\\", ';
+        var sectionText = '{\\"meeting_id\\":\\"' + meeting._id + '\\", ';
 
         Section.findOne({_id: section_id}, function(err, section) {
             if(err){
@@ -180,9 +181,9 @@ module.exports.postMeeting= function (req, res) {
                 return res.status(500).send("not werking");
             }
 
-            sectionText.append('[');
+            sectionText.concat('[');
             
-            for( i = 0; i < section.students.length(); i++ ){
+            for( i = 0; i < section.students.length; i++ ){
 
                 Student.findOne({_id: section.students[i]._id}, function(err, student){
                     if(err){
@@ -190,14 +191,14 @@ module.exports.postMeeting= function (req, res) {
                         return res.status(500).send("not werking");
                     }
 
-                    sectionText.append('{\\"student_id\\":\\"' + student._id + '\\"}');
+                    sectionText.concat('{\\"student_id\\":\\"' + student._id + '\\"}');
 
-                    if(i != section.students.length() - 1){
-                        sectionText.append(',');
+                    if(i != section.students.length - 1){
+                        sectionText.concat(',');
                     }
                 })
             }
-            sectionText.append(']}');
+            sectionText.concat(']}');
         })
         
         console.log(sectionText);
