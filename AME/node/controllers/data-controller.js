@@ -1,11 +1,19 @@
 var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 const exec = require('child_process').exec;
+var fs = require("fs");
+
+var gridfs = require('mongoose-gridfs')({
+    collection:'attachments',
+    model:'Attachment',
+    mongooseConnection: mongoose.connection
+})
 
 var Instructor = require('../model/Instructor.js');
 var Section = require('../model/Section.js');
 var Meeting = require('../model/Meeting.js');
 var Student = require('../model/Student.js');
+var Attachment = gridfs.model;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //HELPER FUNCTIONS
