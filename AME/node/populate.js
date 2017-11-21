@@ -102,11 +102,26 @@ mongoose.connection.on('open', function(){
             //console.log("uploading pic at C:/AME/AME/node/CroppedFaces/" + (i+1) + ".png")
             
             fs.readFile("C:/AME/AME/node/CroppedFaces/" + (i+1) + ".png", function(err, data){
-                Student.updateOne({firstName: (i+1) + ""}, 
-                                  {studentPortrait: Buffer.from(data.toString())},
-                                  function(err, affected, resp){
+                
+                Attachment.write({
+                    filename: (i+1) + '.png',
+                    contentType: 'image/png'
+                    },
+                    fs.createReadStream('C:/AME/AME/node/CroppedFaces/'+(i+1)'.jpg'),
+                    function(error, createdFile){
+                        Student.updateOne({
+                            firstName: (i+1) + ""
+                            }, 
+                            {studentPortrait: Buffer.from(data.toString())},
+                            function(err, affected, resp){
                     
-                })
+                                                                   
+                            }
+                        )
+                    }
+                )
+                
+                
             });
         }
     })

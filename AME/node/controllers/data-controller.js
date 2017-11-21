@@ -19,23 +19,11 @@ var Attachment = gridfs.model;
 //HELPER FUNCTIONS
 //////////////////////////////////////////////////////////////////////////////////////////
 
-function sendToken(res, package) {
-    
-    var body = {};
-    
-    var token = jwt.sign(body, process.env.SECRET_KEY, {
-		expiresIn: 4000
-	});
-    
-    var json = {
-		success: true,
-		token: token,
-        package: package
-    };
-    
-    console.log('sending: ' + JSON.stringify(json, null, 2));
-
-	res.json(json);
+function bufferToStream(buffer) {  
+  let stream = new Duplex();
+  stream.push(buffer);
+  stream.push(null);
+  return stream;
 }
 
 
@@ -131,16 +119,31 @@ module.exports.postSection = function(req, res) {
 }
 
 module.exports.postStudent = function (req, res) {
+    
+    
+    
     var newStudent = new Student({firstName: req.body.firstName,
                                   lastName: req.body.lastName,
                                   studentID: req.body.studentID,
-                                  studentPortrait: Buffer.from(req.body.studentPortrait, 'base64'),
+                                  studentPortraitAttachmentId: '', 
+                                  'base64'),
                                   socialData: []});
     
     newStudent.save(function (err, student) {
         
         console.log('adding student to ' + req.body.sectionID);
-    
+        
+        Attachment.write({
+            filename: student._id + '.jpg',
+            contentType: 'image/jpg'
+            },
+            bufferToStream(Buffer.from(req.body.studentPortrait)),
+            function(error, createdFile){
+                student.studentPortraitAttachment_id = createdFile._id;
+                student.save();
+            }   
+        )
+        
         Section.findOne({'sectionID': req.body.sectionID}, function(err, section){
             if (err){
                 return res.status(500).send('could not save');
@@ -170,7 +173,7 @@ module.exports.postMeeting= function (req, res) {
     
     
     var newMeeting = new Meeting({dateTime: 0,
-                                  meetingPic: Buffer.from(meetingPic, 'base64'),
+                                  meetingPicAttachment_id: '',
                                   attendance: [],
                                   croppedPics: [],
                                   section_id: section_id});
@@ -180,6 +183,17 @@ module.exports.postMeeting= function (req, res) {
             console.log(err)
             return res.status(500).send('could not save');
         }
+        
+        Attachment.write({
+            filename: meeting._id + '.jpg',
+            contentType: 'image/jpg'
+            },
+            bufferToStream(bufferToStream(Buffer.from(req.body.meetingPic)),
+            function(error, createdFile){
+                meeting.meetingPicAttachment_id = createdFile._id;
+                meeting.save();
+            }   
+        )
         
         var sectionText = '{\\"meeting_id\\":\\"' + meeting._id + '\\", ';
 
