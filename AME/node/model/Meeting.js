@@ -5,7 +5,8 @@ mongoose.Promise = global.Promise;
 module.exports = mongoose.model('Meeting', {
     dateTime: String,
     meetingPicAttachment_id: String,
-    attendance: [{student: String, present: Boolean}],
-    croppedPics: [{student: String, pic: Buffer}],
+    attendance: [{student_id: String, present: Boolean}],
+    croppedPics: [{student_id: String, pic: Buffer}],
+    socialData: [{student_id: String, relationships: [{student_id: String, value: Number}]}],
     section_id: String
 })
