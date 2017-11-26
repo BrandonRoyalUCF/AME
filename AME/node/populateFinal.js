@@ -1,22 +1,29 @@
 var mongoose = require('mongoose');
 var fs = require("fs");
 
-var gridfs = require('mongoose-gridfs')({
-    collection:'attachments',
-    model:'Attachment',
-    mongooseConnection: mongoose.connection
-})
+
 
 //Models
 var Instructor = require('C:/AME/AME/node/model/Instructor.js');
 var Section = require('C:/AME/AME/node/model/Section.js');
 var Meeting = require('C:/AME/AME/node/model/Meeting.js');
 var Student = require('C:/AME/AME/node/model/Student.js');
-var Attachment = gridfs.model;
+
 
 mongoose.connect("mongodb://localhost:27017/test");
 
+
+
 mongoose.connection.on('open', function() {
+    
+    var gridfs = require('mongoose-gridfs')({
+        collection:'attachments',
+        model:'Attachment',
+        mongooseCollection: mongoose.connection
+    })
+
+    var Attachment = gridfs.model;
+    
     mongoose.connection.dropDatabase(function(err, result){
         console.log('data dropped');
         
@@ -42,6 +49,7 @@ mongoose.connection.on('open', function() {
 
                 //add section
                 for(i = 0; i < jsonContent.sections.length; i++){
+                    
                     var newSection = new Section({
                         sectionID: jsonContent.sections[i].sectionID,
                         courseName: jsonContent.sections[i].courseName,
@@ -67,10 +75,11 @@ mongoose.connection.on('open', function() {
                                 firstName: jsonContent.students[i].firstName,
                                 lastName: jsonContent.students[i].lastName,
                                 studentID: jsonContent.students[i].studentID,
-                                studentPortraitAttachment_ids: [createdFileA._id, createdFileB._id, createdFileC._id]
+                                studentPortraitAttachment_ids: []
                             });
 
                             newStudent.save(function(err, student){
+                                
                                 if (err){
                                     console.log(err)
                                 }
@@ -86,36 +95,44 @@ mongoose.connection.on('open', function() {
                                 if(section.students.length == jsonContent.students.length){
                                     section.save()
                                 }
-                                
                                 Attachment.write({
-                                    filename: (i) + "a.jpg",
+                                    filename: (student.studentID) + "a.jpg",
                                     contentType: 'image/jpg'
                                     },
-                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (i)+'a.jpg'),
+                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'a.jpg'),
                                     function(error, createdFileA){
                                         Student.updateOne({_id: student._id},
-                                                          {$push: {studentPortraitAttachment_ids: createdFileA._id}})
+                                                          {$push: {studentPortraitAttachment_ids: createdFileA._id}},
+                                                          function(err){
+                                                              console.log(err)
+                                                          })
                                     }
                                 )
                             
                                 Attachment.write({
-                                    filename: (i) + "b.jpg",
+                                    filename: (student.studentID) + "b.jpg",
                                     contentType: 'image/jpg'
                                     },
-                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (i)+'b.jpg'),
+                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'b.jpg'),
                                     function(error, createdFileB){
                                         Student.updateOne({_id: student._id},
-                                                          {$push: {studentPortraitAttachment_ids: createdFileB._id}})
+                                                          {$push: {studentPortraitAttachment_ids: createdFileB._id}},
+                                                          function(err){
+                                                              console.log(err)
+                                                          })
                                     }
                                 )
                                 Attachment.write({
-                                    filename: (i) + "c.jpg",
+                                    filename: (student.studentID) + "c.jpg",
                                     contentType: 'image/jpg'
                                     },
-                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (i)+'c.jpg'),
+                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'c.jpg'),
                                     function(error, createdFileC){
                                         Student.updateOne({_id: student._id},
-                                                          {$push: {studentPortraitAttachment_ids: createdFileC._id}})
+                                                          {$push: {studentPortraitAttachment_ids: createdFileC._id}},
+                                                          function(err){
+                                                              console.log(err)
+                                                          })
                                     }
                                 )
 
