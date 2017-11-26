@@ -67,6 +67,32 @@ mongoose.connection.on('open', function() {
                         instructor.save()
 
                         console.log('Added Section: ' + newSection)
+                        
+                        Attachment.write({
+                            filename: "meetingPic.jpg",
+                            contentType: 'image/jpg'
+                            },
+                            fs.createReadStream('C:/AME/AME/node/MeetingPic/meetingPic.jpg'),
+                            function(error, meetingPic){
+                                Attachment.write({
+                                    filename: "depthPic.jpg",
+                                    contentType: 'image/jpg'
+                                    },
+                                    fs.createReadStream('C:/AME/AME/node/MeetingPic/depthPic.jpg'),
+                                    function(error, depthPic){
+                                        var newMeeting = new Meeting({
+                                            dateTime: '',
+                                            meetingPicAttachment_id: meetingPic._id,
+                                            depthPicAttachment_id: depthPic._id,
+                                            attendance: [],
+                                            croppedPics: [],
+                                            socialData: [],
+                                            section_id: section._id
+                                        })
+                                    }
+                                )
+                            }
+                        )
 
                         //add students without pictures
                         for(i = 0; i < jsonContent.students.length; i++){
