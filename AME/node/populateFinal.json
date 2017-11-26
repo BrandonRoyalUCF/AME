@@ -1,0 +1,133 @@
+{
+  "instructors": [
+    {
+      "username": "ulmers",
+      "password": "password",
+      "firstName": "Stephen",
+      "lastName": "Ulmer",
+      "email": "test@gmail.com",
+      "facultyID": "fa123456",
+      "sections": []
+    }
+  ],
+  "sections": [
+    {
+      "sectionID": "TST1000",
+      "courseName": "Test",
+      "students": [],
+      "meetings": []
+    }
+  ],
+  "students": [
+    {
+      "firstName": "Steven",
+      "lastName": "Staniec",
+      "studentID": "st000001"
+    },
+    {
+      "firstName": "Andrew",
+      "lastName": "Maurer",
+      "studentID": "an000001"
+    },
+    {
+      "firstName": "Mike",
+      "lastName": "Jones",
+      "studentID": "mi000001"
+    },
+    {
+      "firstName": "Jordan",
+      "lastName": "Vanek",
+      "studentID": "jo000001"
+    },
+    {
+      "firstName": "Noah",
+      "lastName": "Jacobs",
+      "studentID": "no000001"
+    },
+    {
+      "firstName": "Mickey",
+      "lastName": "Howard",
+      "studentID": "mi000002"
+    },
+    {
+      "firstName": "Jon",
+      "lastName": "Muratori",
+      "studentID": "jo000002"
+    },
+    {
+      "firstName": "Alexis",
+      "lastName": "Hampilos",
+      "studentID": "al000001"
+    },
+    {
+      "firstName": "Danny",
+      "lastName": "Korentur",
+      "studentID": "da000001"
+    },
+    {
+      "firstName": "Nicolos",
+      "lastName": "Savolidis",
+      "studentID": "ni000001"
+    },
+    {
+      "firstName": "Kenna",
+      "lastName": "Hornibrook",
+      "studentID": "ke000001"
+    },
+    {
+      "firstName": "Ryan",
+      "lastName": "Stern",
+      "studentID": "ry000001"
+    },
+    {
+      "firstName": "Tim",
+      "lastName": "Knoll",
+      "studentID": "ti000001"
+    },
+    {
+      "firstName": "Daniel",
+      "lastName": "Croatti",
+      "studentID": "da000002"
+    },
+    {
+      "firstName": "Morgan",
+      "lastName": "Sammler",
+      "studentID": "mo000001"
+    },
+    {
+      "firstName": "Sagar",
+      "lastName": "Mistry",
+      "studentID": "sa000001"
+    },
+    {
+      "firstName": "Gabriella",
+      "lastName": "Ruiz",
+      "studentID": "ga000001"
+    },
+    {
+      "firstName": "Kathryn",
+      "lastName": "Crowley",
+      "studentID": "ka000001"
+    },
+    {
+      "firstName": "Blue",
+      "lastName": "Shirt",
+      "studentID": "bl000001"
+    },
+    {
+      "firstName": "Thais",
+      "lastName": "Jimenez",
+      "studentID": "th000001"
+    },
+    {
+      "firstName": "Andrew",
+      "lastName": "Simms",
+      "studentID": "an000002"
+    },
+    {
+      "firstName": "Randy",
+      "lastName": "Jaycox",
+      "studentID": "ra000001"
+    }
+  ]
+}
