@@ -64,19 +64,12 @@ mongoose.connection.on('open', function() {
                         //add students without pictures
                         for(i = 0; i < jsonContent.students.length; i++){
                             
-                            Attachment.write({
-                                filename: (i+1) + ".jpg"
-                                contentType: 'image/jpg'
-                            },
-                            fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (i+1)+'.jpg'))
-                                
-                            })
                             var newStudent = new Student({
                                 firstName: jsonContent.students[i].firstName,
                                 lastName: jsonContent.students[i].lastName,
                                 studentID: jsonContent.students[i].studentID,
-                                studentPortrait: jsonContent.students[i].studentPortrait,
-                                socialData: []});
+                                studentPortraitAttachment_ids: [createdFileA._id, createdFileB._id, createdFileC._id]
+                            });
 
                             newStudent.save(function(err, student){
                                 if (err){
@@ -94,8 +87,43 @@ mongoose.connection.on('open', function() {
                                 if(section.students.length == jsonContent.students.length){
                                     section.save()
                                 }
+                                
+                                Attachment.write({
+                                    filename: (i+1) + "a.jpg",
+                                    contentType: 'image/jpg'
+                                    },
+                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (i+1)+'a.jpg'),
+                                    function(error, createdFileA){
+                                        Student.updateOne({_id: student._id},
+                                                          {$push: {studentPortraitAttachment_ids: createdFileA._id}})
+                                    }
+                                )
+                            
+                                Attachment.write({
+                                    filename: (i+1) + "b.jpg",
+                                    contentType: 'image/jpg'
+                                    },
+                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (i+1)+'b.jpg'),
+                                    function(error, createdFileB){
+                                        Student.updateOne({_id: student._id},
+                                                          {$push: {studentPortraitAttachment_ids: createdFileB._id}})
+                                    }
+                                )
+                                Attachment.write({
+                                    filename: (i+1) + "c.jpg",
+                                    contentType: 'image/jpg'
+                                    },
+                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (i+1)+'c.jpg'),
+                                    function(error, createdFileC){
+                                        Student.updateOne({_id: student._id},
+                                                          {$push: {studentPortraitAttachment_ids: createdFileC._id}})
+                                    }
+                                )
 
                             });
+                            
+                            
+                        }
                         }
                     });
                 }
