@@ -32,7 +32,6 @@ mongoose.connection.on('open', function() {
                 email: jsonContent.instructors[i].email,
                 facultyID: jsonContent.instructors[i].facultyID,
                 sections: []}); 
-            })
             
             newInstructor.save(function(err, instructor){
                 if (err){
