@@ -19,6 +19,21 @@ var Attachment = gridfs.model;
 //HELPER FUNCTIONS
 //////////////////////////////////////////////////////////////////////////////////////////
 
+function sendToken(res, package) {
+    
+    console.log('send token with package:' + body.toString());
+    
+    var token = jwt.sign({}, process.env.SECRET_KEY, {
+		expiresIn: 4000
+	});
+
+	res.json({
+		success: true,
+		token: token,
+        package: package
+	});
+}
+
 function bufferToStream(buffer) {  
   let stream = new Duplex();
   stream.push(buffer);
@@ -170,8 +185,6 @@ module.exports.postMeeting= function (req, res) {
 
     var meetingPic = req.body.meetingPic.toString()
     
-    
-    
     var newMeeting = new Meeting({dateTime: 0,
                                   meetingPicAttachment_id: '',
                                   attendance: [],
@@ -195,37 +208,10 @@ module.exports.postMeeting= function (req, res) {
             }   
         )
         
-        var sectionText = '{\\"meeting_id\\":\\"' + meeting._id + '\\", ';
-
-        Section.findOne({_id: section_id}, function(err, section) {
-            if(err){
-                console.log(err);
-                return res.status(500).send("not werking");
-            }
-
-            sectionText.concat('[');
-            
-            for( i = 0; i < section.students.length; i++ ){
-
-                Student.findOne({_id: section.students[i]._id}, function(err, student){
-                    if(err){
-                        console.log(err);
-                        return res.status(500).send("not werking");
-                    }
-
-                    sectionText.concat('{\\"student_id\\":\\"' + student._id + '\\"}');
-
-                    if(i != section.students.length - 1){
-                        sectionText.concat(',');
-                    }
-                })
-            }
-            sectionText.concat(']}');
-        })
+        meetingJSONString = '{"meeting_id": "'+ meeting._id+'",
+                             '"section_id": "'+ section_id+'"}'
         
-        console.log(sectionText);
-        
-        const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/imgProc/match.py ' + sectionText, function (err, stdout, stderr){
+        const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/imgProc/match.py ' + meetingJSONString, function (err, stdout, stderr){
             if (err){
                 console.log(err)
             }
@@ -234,6 +220,8 @@ module.exports.postMeeting= function (req, res) {
             }
             
             console.log(stdout)
+            
+            sendToken(res, stdout)
         });
     })
 }

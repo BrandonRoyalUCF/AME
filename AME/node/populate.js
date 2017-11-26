@@ -17,9 +17,8 @@ var Attachment = gridfs.model;
 mongoose.connect("mongodb://localhost:27017/test");
 
 mongoose.connection.on('open', function(){
-    console.log('check')
     mongoose.connection.dropDatabase(function(err, result){
-        console.log('db dropped')
+        console.log('db dropped');
         
         //load populate.json
         var contents = fs.readFileSync("populate.json");
@@ -99,30 +98,23 @@ mongoose.connection.on('open', function(){
         
         //add pictures based on firstName
         for(i = 0; i < jsonContent.students.length; i++){
-            //console.log("uploading pic at C:/AME/AME/node/CroppedFaces/" + (i+1) + ".png")
             
-            fs.readFile("C:/AME/AME/node/CroppedFaces/" + (i+1) + ".png", function(err, data){
                 
-                Attachment.write({
-                    filename: (i+1) + '.png',
-                    contentType: 'image/png'
-                    },
-                    fs.createReadStream('C:/AME/AME/node/CroppedFaces/'+(i+1)'.jpg'),
-                    function(error, createdFile){
-                        Student.updateOne({
-                            firstName: (i+1) + ""
-                            }, 
-                            {studentPortrait: Buffer.from(data.toString())},
-                            function(err, affected, resp){
-                    
-                                                                   
-                            }
-                        )
-                    }
-                )
-                
-                
-            });
+            Attachment.write({
+                filename: (i+1) + '.png',
+                contentType: 'image/png'
+                },
+                fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/'+(i+1)'.jpg'),
+                function(error, createdFile){
+                    Student.updateOne({
+                        firstName: (i+1) + ""
+                        }, 
+                        {$push: {studentPortraitAttachment_ids: createdFile._id}},
+                        function(err, affected, resp){
+                        }
+                    )
+                }
+            )
         }
     })
 })

@@ -2,17 +2,18 @@ var jwt = require('jsonwebtoken');
 
 var Instructor = require('../model/Instructor.js');
 
-function sendToken(res, body) {
+function sendToken(res, package) {
     
-    console.log('send token with body:' + body.toString());
+    console.log('send token with package:' + body.toString());
     
-    var token = jwt.sign(body, process.env.SECRET_KEY, {
+    var token = jwt.sign({}, process.env.SECRET_KEY, {
 		expiresIn: 4000
 	});
 
 	res.json({
 		success: true,
-		token: token
+		token: token,
+        package: package
 	});
 }
 

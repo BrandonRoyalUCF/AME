@@ -6,9 +6,5 @@ module.exports = mongoose.model('Student', {
     firstName: String,
     lastName: String,
     studentID: String,
-    studentPortraitAttachment_id: Buffer,
-    socialData: [{section: String, 
-                  relationships: [{student: String, 
-                                   strength: Number}] 
-                 }]
+    studentPortraitAttachment_ids: [String]//Attachment_id
 });
