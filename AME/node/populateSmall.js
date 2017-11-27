@@ -27,7 +27,7 @@ mongoose.connection.on('open', function() {
     mongoose.connection.dropDatabase(function(err, result){
         console.log('data dropped');
         
-        var contents = fs.readFileSync("populateFinal.json");
+        var contents = fs.readFileSync("populateSmall.json");
         var jsonContent = JSON.parse(contents);
         
         for(i = 0; i < jsonContent.instructors.length; i++){
@@ -72,13 +72,13 @@ mongoose.connection.on('open', function() {
                             filename: "meetingPic.jpg",
                             contentType: 'image/jpg'
                             },
-                            fs.createReadStream('C:/AME/AME/node/MeetingPic/meetingPic.jpg'),
+                            fs.createReadStream('C:/AME/AME/node/SmallMeetingPic/meetingPic.jpg'),
                             function(error, meetingPic){
                                 Attachment.write({
                                     filename: "depthPic.jpg",
                                     contentType: 'image/jpg'
                                     },
-                                    fs.createReadStream('C:/AME/AME/node/MeetingPic/depthPic.jpg'),
+                                    fs.createReadStream('C:/AME/AME/node/SmallMeetingPic/depthPic.jpg'),
                                     function(error, depthPic){
                                         var newMeeting = new Meeting({
                                             dateTime: '',
@@ -156,6 +156,20 @@ mongoose.connection.on('open', function() {
                                     function(error, createdFileC){
                                         Student.updateOne({_id: student._id},
                                                           {$push: {studentPortraitAttachment_ids: createdFileC._id}},
+                                                          function(err){
+                                                              console.log(err)
+                                                          })
+                                    }
+                                )
+                                
+                                Attachment.write({
+                                    filename: (student.studentID) + "d.jpg",
+                                    contentType: 'image/jpg'
+                                    },
+                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'d.jpg'),
+                                    function(error, createdFileD){
+                                        Student.updateOne({_id: student._id},
+                                                          {$push: {studentPortraitAttachment_ids: createdFileD._id}},
                                                           function(err){
                                                               console.log(err)
                                                           })
