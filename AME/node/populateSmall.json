@@ -1,0 +1,73 @@
+{
+  "instructors": [
+    {
+      "username": "ulmers",
+      "password": "password",
+      "firstName": "Stephen",
+      "lastName": "Ulmer",
+      "email": "test@gmail.com",
+      "facultyID": "fa123456",
+      "sections": []
+    }
+  ],
+  "sections": [
+    {
+      "sectionID": "TST1000",
+      "courseName": "Test",
+      "students": [],
+      "meetings": []
+    }
+  ],
+  "students": [
+    {
+      "firstName": "Florian",
+      "lastName": "Schneider",
+      "studentID": "fl000001"
+    },
+    {
+      "firstName": "Andrew",
+      "lastName": "Maurer",
+      "studentID": "an000001"
+    },
+    {
+      "firstName": "Kelly",
+      "lastName": "Test",
+      "studentID": "ke000001"
+    },
+    {
+      "firstName": "Kenna",
+      "lastName": "Hornibrook",
+      "studentID": "ke000001"
+    },
+    {
+      "firstName": "Jesse",
+      "lastName": "Test",
+      "studentID": "je000001"
+    },
+    {
+      "firstName": "Nicole",
+      "lastName": "Gribben",
+      "studentID": "ni000001"
+    },
+    {
+      "firstName": "Nicole",
+      "lastName": "Nabridge",
+      "studentID": "ni000002"
+    },
+    {
+      "firstName": "White",
+      "lastName": "Twin",
+      "studentID": "wh000001"
+    },
+    {
+      "firstName": "Black",
+      "lastName": "Twin",
+      "studentID": "bl000001"
+    },
+    {
+      "firstName": "Brett",
+      "lastName": "Steinman",
+      "studentID": "br000001"
+    }
+  ]
+}
