@@ -140,8 +140,7 @@ module.exports.postStudent = function (req, res) {
     var newStudent = new Student({firstName: req.body.firstName,
                                   lastName: req.body.lastName,
                                   studentID: req.body.studentID,
-                                  studentPortraitAttachmentId: '', 
-                                  'base64'}),
+                                  studentPortraitAttachmentId: '',
                                   socialData: []});
     
     newStudent.save(function (err, student) {
