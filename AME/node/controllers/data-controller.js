@@ -28,7 +28,7 @@ mongoose.connection.on('open', function(){
 
 function sendToken(res, package) {
     
-    console.log('send token with package:' + body.toString());
+    console.log('send token with package:' + package.toString());
     
     var token = jwt.sign({}, process.env.SECRET_KEY, {
 		expiresIn: 4000
