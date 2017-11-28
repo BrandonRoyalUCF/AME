@@ -89,6 +89,10 @@ mongoose.connection.on('open', function() {
                                             socialData: [],
                                             section_id: section._id
                                         })
+                                        
+                                        newMeeting.save(function(err, meeting){
+                                            
+                                        })
                                     }
                                 )
                             }
