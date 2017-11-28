@@ -92,6 +92,12 @@ mongoose.connection.on('open', function() {
                                         
                                         newMeeting.save(function(err, meeting){
                                             
+                                            section.meetings.push(meeting._id)
+                                            
+                                            section.markModified()
+                                            
+                                            section.save()
+                                            
                                         })
                                     }
                                 )
