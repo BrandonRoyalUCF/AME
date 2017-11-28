@@ -141,7 +141,7 @@ module.exports.postStudent = function (req, res) {
                                   lastName: req.body.lastName,
                                   studentID: req.body.studentID,
                                   studentPortraitAttachmentId: '', 
-                                  'base64'),
+                                  'base64'}),
                                   socialData: []});
     
     newStudent.save(function (err, student) {
