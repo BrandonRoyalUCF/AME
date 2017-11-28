@@ -204,7 +204,7 @@ module.exports.postMeeting= function (req, res) {
             function(error, createdFile){
                 meeting.meetingPicAttachment_id = createdFile._id;
                 meeting.save();
-            }   
+            })
         )
         
         meetingJSONString = '{"meeting_id": "'+ meeting._id+'",
