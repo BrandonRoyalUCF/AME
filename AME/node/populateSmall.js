@@ -125,7 +125,7 @@ mongoose.connection.on('open', function() {
                                     filename: (student.studentID) + "a.jpg",
                                     contentType: 'image/jpg'
                                     },
-                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'a.jpg'),
+                                    fs.createReadStream('C:/AME/AME/node/CroppedSmallFaces/' + (student.studentID)+'a.jpg'),
                                     function(error, createdFileA){
                                         Student.updateOne({_id: student._id},
                                                           {$push: {studentPortraitAttachment_ids: createdFileA._id}},
@@ -139,7 +139,7 @@ mongoose.connection.on('open', function() {
                                     filename: (student.studentID) + "b.jpg",
                                     contentType: 'image/jpg'
                                     },
-                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'b.jpg'),
+                                    fs.createReadStream('C:/AME/AME/node/CroppedSmallFaces/' + (student.studentID)+'b.jpg'),
                                     function(error, createdFileB){
                                         Student.updateOne({_id: student._id},
                                                           {$push: {studentPortraitAttachment_ids: createdFileB._id}},
@@ -152,7 +152,7 @@ mongoose.connection.on('open', function() {
                                     filename: (student.studentID) + "c.jpg",
                                     contentType: 'image/jpg'
                                     },
-                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'c.jpg'),
+                                    fs.createReadStream('C:/AME/AME/node/CroppedSmallFaces/' + (student.studentID)+'c.jpg'),
                                     function(error, createdFileC){
                                         Student.updateOne({_id: student._id},
                                                           {$push: {studentPortraitAttachment_ids: createdFileC._id}},
@@ -166,7 +166,7 @@ mongoose.connection.on('open', function() {
                                     filename: (student.studentID) + "d.jpg",
                                     contentType: 'image/jpg'
                                     },
-                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'d.jpg'),
+                                    fs.createReadStream('C:/AME/AME/node/CroppedSmallFaces/' + (student.studentID)+'d.jpg'),
                                     function(error, createdFileD){
                                         Student.updateOne({_id: student._id},
                                                           {$push: {studentPortraitAttachment_ids: createdFileD._id}},
