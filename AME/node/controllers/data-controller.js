@@ -207,8 +207,8 @@ module.exports.postMeeting= function (req, res) {
             })
         )
         
-        meetingJSONString = '{"meeting_id": "'+ meeting._id+'",
-                             '"section_id": "'+ section_id+'"}'
+        meetingJSONString = '{\"meeting_id\": \"'+ meeting._id+'\",
+                             '\"section_id\": \"'+ section_id+'\"}'
         
         const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/imgProc/match.py ' + meetingJSONString, function (err, stdout, stderr){
             if (err){
