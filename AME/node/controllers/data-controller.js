@@ -3,17 +3,24 @@ var mongoose = require('mongoose');
 const exec = require('child_process').exec;
 var fs = require("fs");
 
-var gridfs = require('mongoose-gridfs')({
-    collection:'attachments',
-    model:'Attachment',
-    mongooseConnection: mongoose.connection
-})
+var gridfs;
 
 var Instructor = require('../model/Instructor.js');
 var Section = require('../model/Section.js');
 var Meeting = require('../model/Meeting.js');
 var Student = require('../model/Student.js');
-var Attachment = gridfs.model;
+var Attachment;
+
+mongoose.connection.on('open', function(){
+    gridfs = require('mongoose-gridfs')({
+        collection:'attachments',
+        model:'Attachment',
+        mongooseConnection: mongoose.connection
+    })
+    
+    gridfs.model;
+
+})
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //HELPER FUNCTIONS
