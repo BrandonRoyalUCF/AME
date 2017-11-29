@@ -309,8 +309,6 @@ module.exports.getAttachment = function(req, res) {
 
     stream.on('close', function(){
             var package = {attachmentPic: Buffer.concat(buffers).toString('base64')}
-            
-            console.log(package)
 
             sendToken(res, package)
         });
