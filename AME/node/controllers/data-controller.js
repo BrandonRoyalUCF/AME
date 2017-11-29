@@ -278,7 +278,7 @@ module.exports.getStudent = function(req, res) {
             return res.status(500).send("not werking");
         }
         
-        res.send(student);
+        sendToken(res, student);
     })
 }
 
