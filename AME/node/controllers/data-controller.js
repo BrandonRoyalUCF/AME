@@ -282,6 +282,19 @@ module.exports.getStudent = function(req, res) {
     })
 }
 
+module.exports.getAttachment = function(req, res) {
+    
+    var attachment_id = req.query["attachment_id"];
+    
+    Attachment.readById(attachment_id, function(err, content){
+        if(err){
+            return res.status(500).send("not werking");
+        }
+        
+        sendToken(res, content)
+    })
+}
+
 module.exports.getMeeting = function(req,res) {
     
     var meetingID = req.query["meetingID"];
