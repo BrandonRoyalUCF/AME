@@ -288,7 +288,7 @@ module.exports.getAttachment = function(req, res) {
     
     console.log('getting attachment with _id: ' + attachment_id)
     
-    var stream = Attachment.readById(attachment_id, )
+    var stream = Attachment.readById(attachment_id)
     
     stream.on('error', fn);
 
