@@ -288,15 +288,17 @@ module.exports.getAttachment = function(req, res) {
     
     console.log('getting attachment with _id: ' + attachment_id)
     
-    Attachment.readById(attachment_id, function(err, content){
-        if(err){
-            return res.status(500).send("not werking");
-        }
-        
-        var package = {attachmentPic: content.toString('base64')}
-        
-        sendToken(res, package)
-    })
+    var stream = Attachment.readById(attachment_id, )
+    
+    stream.on('error', fn);
+
+    stream.on('data', function(){
+            var package = {attachmentPic: stream.toString('base64')}
+
+            sendToken(res, package)
+        });
+
+    stream.on('close', fn);
 }
 
 module.exports.getMeeting = function(req,res) {
