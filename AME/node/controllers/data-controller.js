@@ -290,7 +290,9 @@ module.exports.getAttachment = function(req, res) {
     
     var stream = Attachment.readById(attachment_id)
     
-    stream.on('error', fn);
+    stream.on('error', function(){
+        
+    });
 
     stream.on('data', function(){
             var package = {attachmentPic: stream.toString('base64')}
@@ -298,7 +300,9 @@ module.exports.getAttachment = function(req, res) {
             sendToken(res, package)
         });
 
-    stream.on('close', fn);
+    stream.on('close', function(){
+        
+    });
 }
 
 module.exports.getMeeting = function(req,res) {
