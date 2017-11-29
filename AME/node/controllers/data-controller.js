@@ -41,6 +41,15 @@ function sendToken(res, package) {
 	});
 }
 
+function streamToBuffer(stream) {  
+  return new Promise((resolve, reject) => {
+    let buffers = [];
+    stream.on('error', reject);
+    stream.on('data', (data) => buffers.push(data))
+    stream.on('end', () => resolve(Buffer.concat(buffers))
+  });
+}  
+
 function bufferToStream(buffer) {  
   let stream = new Duplex();
   stream.push(buffer);
@@ -295,7 +304,7 @@ module.exports.getAttachment = function(req, res) {
     });
 
     stream.on('data', function(){
-            var package = {attachmentPic: stream.toString('base64')}
+            var package = {attachmentPic: streamToBuffer(data).toString('base64')}
 
             sendToken(res, package)
         });
