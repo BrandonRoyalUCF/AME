@@ -299,21 +299,21 @@ module.exports.getAttachment = function(req, res) {
     
     var stream = Attachment.readById(attachment_id)
     
+    let buffers = [];
+    
     stream.on('error', function(){
         
     });
 
-    stream.on('data', function(){
-            var package = {attachmentPic: streamToBuffer(stream).toString('base64')}
+    stream.on('data', (data) => buffers.push(data));
+
+    stream.on('close', function(){
+            var package = {attachmentPic: resolve(Buffer.concat(buffers).toString('base64')}
             
             console.log(package)
 
             sendToken(res, package)
         });
-
-    stream.on('close', function(){
-        
-    });
 }
 
 module.exports.getMeeting = function(req,res) {
