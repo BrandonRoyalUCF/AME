@@ -18,7 +18,7 @@ mongoose.connection.on('open', function(){
         mongooseConnection: mongoose.connection
     })
     
-    gridfs.model;
+    Attachment = gridfs.model;
 
 })
 
