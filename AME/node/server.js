@@ -74,6 +74,7 @@ secureRoutes.get('/instructor', dataController.getInstructor);
 secureRoutes.get('/section', dataController.getSection);
 secureRoutes.get('/meeting', dataController.getMeeting);
 secureRoutes.get('/student', dataController.getStudent);
+secureRoutes.get('/attachment', dataController.getAttachment);
 
 //UPDATE
 
