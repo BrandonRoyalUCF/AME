@@ -286,10 +286,13 @@ module.exports.getAttachment = function(req, res) {
     
     var attachment_id = req.query["attachment_id"];
     
-    Attachment.readById(mongoose.Types.ObjectId(attachment_id), function(err, content){
+    console.log('getting attachment with _id: ' + attachment_id)
+    
+    Attachment.readById(attachment_id, function(err, content){
         if(err){
             return res.status(500).send("not werking");
         }
+        
         
         sendToken(res, content)
     })
