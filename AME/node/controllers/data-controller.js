@@ -304,7 +304,7 @@ module.exports.getAttachment = function(req, res) {
     });
 
     stream.on('data', function(){
-            var package = {attachmentPic: streamToBuffer(data).toString('base64')}
+            var package = {attachmentPic: streamToBuffer(stream).toString('base64')}
 
             sendToken(res, package)
         });
