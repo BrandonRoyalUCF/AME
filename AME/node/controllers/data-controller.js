@@ -273,7 +273,7 @@ module.exports.getStudent = function(req, res) {
     
     var student_id = req.query["student_id"];
     
-    Section.findOne({student_id: student_id}, function(err, student) {
+    Student.findOne({_id: student_id}, function(err, student) {
         if(err){
             return res.status(500).send("not werking");
         }
