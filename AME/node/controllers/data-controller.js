@@ -308,7 +308,7 @@ module.exports.getAttachment = function(req, res) {
     stream.on('data', (data) => buffers.push(data));
 
     stream.on('close', function(){
-            var package = {attachmentPic: resolve(Buffer.concat(buffers).toString('base64'))}
+            var package = {attachmentPic: Buffer.concat(buffers).toString('base64')}
             
             console.log(package)
 
