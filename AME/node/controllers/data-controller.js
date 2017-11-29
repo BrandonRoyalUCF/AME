@@ -293,8 +293,9 @@ module.exports.getAttachment = function(req, res) {
             return res.status(500).send("not werking");
         }
         
+        var package = {attachmentPic: content.toString('base64')}
         
-        sendToken(res, content)
+        sendToken(res, package)
     })
 }
 
