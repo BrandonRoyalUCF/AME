@@ -451,7 +451,7 @@ class Matcher():
         #        allMatched = False
 
         for i in range(numberCropped):
-            if(alreadyMatchedCropped[i] == True or allMatched == True):
+            if(alreadyMatchedCropped[i] == True):
                     continue
             while(arrayMatchesLeft[i] > 0):
                 

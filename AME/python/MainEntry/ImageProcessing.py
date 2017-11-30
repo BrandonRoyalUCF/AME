@@ -55,7 +55,7 @@ class ImageProcessing():
             picName = os.path.basename(os.path.normpath(fname))
             image = cv2.imread(fname)
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            faces = self.faceCascade.detectMultiScale(gray, scaleFactor=2, minNeighbors=10, minSize=(30, 30))
+            faces = self.faceCascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=10, minSize=(30, 30))
 
             for (x, y, w, h) in faces:
                 cropImg = image[y:y + h, x:x + w]
