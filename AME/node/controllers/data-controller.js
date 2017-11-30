@@ -260,7 +260,10 @@ module.exports.postMeeting= function (req, res) {
             }
         )
         
-        Section.updateOne({_id: section_id}, {$push: {meetings: {dateTime: 0, _id: meeting._id}}})
+        Section.findOne({_id: section_id}, function(err, section){
+            section.meetings.push(meeting._id)
+            section.save()
+        })
         
         meetingJSONString = '\"{\\\"meeting_id\\\" : \\\"' + meeting._id.toString() + '\\\" , \\\"section_id\\\" : \\\"' + section_id+ '\\\"}\"';
         
