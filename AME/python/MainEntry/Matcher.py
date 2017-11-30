@@ -402,7 +402,8 @@ class Matcher():
         #    print("Student #" +str(i)+"'s top matches are: ")
         #    print(topMatches[i])
 
-        
+        countMatched = 0
+
         #array to track "final" matches, the index is the cropped face id, the value of each index is the corresponding student portrait match
         finalMatch = [-1 for i in range(numberCropped)]
 
@@ -417,6 +418,8 @@ class Matcher():
 
         if(useDelete == True):
             for i in range(numberCropped):
+                if(countMatched == numberTotalStudents):
+                    break
                 topMatch = topMatches[i][0]
                 unique = True
                 for j in range(numberCropped):
@@ -425,6 +428,7 @@ class Matcher():
                         if(topMatch == curTopMatch):
                             unique = False
                 if(unique == True):
+                    countMatched = countMatched + 1
                     alreadyMatchedCropped[i] = True
                     alreadyMatchedPortrait[topMatch] = True
                     finalMatch[i] = topMatch
@@ -451,10 +455,13 @@ class Matcher():
         #        allMatched = False
 
         for i in range(numberCropped):
+            if(countMatched == numberTotalStudents):
+                    break
             if(alreadyMatchedCropped[i] == True):
                     continue
             while(arrayMatchesLeft[i] > 0):
-                
+                if(countMatched == numberTotalStudents):
+                    break
                 #allMatched = True
                 #for i in range(numberCropped):
                 #    if(finalMatch[i] == -1):
