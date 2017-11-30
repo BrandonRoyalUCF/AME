@@ -17,7 +17,7 @@ class DataBase():
 
     def connectToDB(self):
         #client = MongoClient('mongodb://10.171.204.168:27017/')
-        client = MongoClient('mongodb://localhost/')
+        client = MongoClient('mongodb://localhost:27017/')
         db = client['test']
         return db
 
