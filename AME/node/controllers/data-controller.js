@@ -156,8 +156,7 @@ module.exports.postStudent = function (req, res) {
     var newStudent = new Student({firstName: req.body.firstName,
                                   lastName: req.body.lastName,
                                   studentID: req.body.studentID,
-                                  studentPortraitAttachmentId: '',
-                                  socialData: []});
+                                  studentPortraitAttachmentIds: []});
     
     newStudent.save(function (err, student) {
         
@@ -169,8 +168,24 @@ module.exports.postStudent = function (req, res) {
             },
             bufferToStream(Buffer.from(req.body.studentPortrait)),
             function(error, createdFile){
-                student.studentPortraitAttachment_id = createdFile._id;
-                student.save();
+                Student.updateOne({_id: student._id}, {$push: {studentPortraitAttachmentId}})
+            
+                studentJSONString = '{\"student_id\": \"'+ student._id+'\",\"studentPortraitAttachmentIds\": \"'+  +'\"}';
+            
+                const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/MainEntry/MainEntry.py ' + meetingJSONString, function (err, stdout, stderr){
+                    if (err){
+                        console.log(err)
+                    }
+                    if (stderr) {
+                        console.log(stderr)
+                    }
+
+                    console.log(stdout)
+
+                    sendToken(res, stdout)
+                });
+            
+                
             }   
         )
         
@@ -189,6 +204,9 @@ module.exports.postStudent = function (req, res) {
 
             section.save();
         })
+        
+        
+        
     });
 }
 
