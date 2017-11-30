@@ -69,7 +69,10 @@ class DepthProcessing():
             cropImg = imageOrginal[y:y+h, x:x+w]
             #gray = cv2.cvtColor(cropImg, cv2.COLOR_BGR2GRAY)  # turn portrait to grayscale
             shrink = cv2.resize(cropImg, (self.size, self.size))
-            cropImgPath = self.meeting.getCropsDirectory()+"//"+str(id)+'.jpg'
+            strnum = str(id)
+            if(len(strnum) == 1):
+                strnum = "0"+strnum
+            cropImgPath = self.meeting.getCropsDirectory()+"//"+strnum+'.jpg'
             cv2.imwrite(cropImgPath, shrink)
             #print("wrote cropped face " + str(id))
 
