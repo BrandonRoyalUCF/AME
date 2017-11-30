@@ -168,7 +168,7 @@ module.exports.postStudent = function (req, res) {
             bufferToStream(Buffer.from(req.body.portrait, 'base64')),
             function(error, createdFile){
             
-                studentJSONString = '{\"student_id\": \"'+ student._id+'\",\"studentPortraitAttachmentIds\": [\"'+ createdFile._id +'\"]}';
+                studentJSONString = '\"{\"student_id\": \"'+ student._id+'\",\"studentPortraitAttachmentIds\": [\"'+ createdFile._id +'\"]}\"';
             
                 const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/MainEntry/CropPortraitsScript.py ' + studentJSONString, function (err, stdout, stderr){
                     if (err){
