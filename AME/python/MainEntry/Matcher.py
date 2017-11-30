@@ -443,6 +443,13 @@ class Matcher():
                     continue
             while(arrayMatchesLeft[i] > 0):
                 
+                allMatched = True
+                for i in range(numberCropped):
+                    if(finalMatch[i] == -1):
+                        allMatched = False
+                if(allMatched):
+                    break
+
                 #print('top matches', topMatches)
                 topMatch = topMatches[i][0]
                 #print("for cropped face " + str(i) + " we are considering student " + str(topMatch))
