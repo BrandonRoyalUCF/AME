@@ -187,7 +187,7 @@ class ImageProcessing():
                     if(confMatrix[i][j] > currentHightest):
                         currentHightest = confMatrix[i][j]
                         currentHighestCroppedNum = i
-            del confMatrix[currentHighestCroppedNum]
+            confMatrix = numpy.delete(confMatrix, currentHighestCroppedNum, 0)
             numberDetetedFaces -= 1
 
 
