@@ -2,6 +2,7 @@ var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 const exec = require('child_process').exec;
 var fs = require("fs");
+var Duplex = require('stream').Duplex; 
 
 var gridfs;
 
