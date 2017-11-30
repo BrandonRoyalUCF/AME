@@ -222,7 +222,7 @@ module.exports.postMeeting= function (req, res) {
     var newMeeting = new Meeting({dateTime: millisecondsSince1970,
                                   meetingPicAttachment_id: '',
                                   labeledMeetingPicAttachment_id: '',
-                                  depthPicAttachment_id: ''
+                                  depthPicAttachment_id: '',
                                   attendance: [],
                                   croppedPics: [],
                                   socialData: [],
