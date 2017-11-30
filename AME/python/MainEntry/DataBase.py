@@ -16,7 +16,8 @@ class DataBase():
         self.sectionId = sectionId
 
     def connectToDB(self):
-        client = MongoClient('mongodb://10.171.204.168:27017/')
+        #client = MongoClient('mongodb://10.171.204.168:27017/')
+        client = MongoClient('mongodb://localhost/')
         db = client['test']
         return db
 
