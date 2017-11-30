@@ -62,7 +62,7 @@ class ImageProcessing():
                 gray = cv2.cvtColor(cropImg, cv2.COLOR_BGR2GRAY)  # turn portrait to grayscale
                 shrink = cv2.resize(gray, (self.size, self.size))
                 cv2.imwrite(self.meeting.getPortraitsCroppedDirectory() + "//" + picName, shrink)
-                print("Cropped image " + picName)
+                #print("Cropped image " + picName)
                 i += 1
 
     def detectAndCropMeetingPic(self):
@@ -137,7 +137,7 @@ class ImageProcessing():
 
             #get only the confidence value in each tuple
             getConf = [x for _, x in array1D]
-            print(getConf)
+            #print(getConf)
 
             #find min conf value for each face
             #print("For Student " + str(count))
@@ -170,7 +170,7 @@ class ImageProcessing():
             #cv2.waitKey(100)
             faceNum+=1
 
-        print()
+        #print()
         #confMatrix = '\n'.join([str(i) for i in confMatrix])
         confMatrix = numpy.array(confMatrix)  #2d list (list of lists) -> 2d matrix
         #print(confMatrix)

@@ -391,9 +391,9 @@ class Matcher():
         #for i in range(len(confidenceMatrix)):
         #    print(confidenceMatrix[i])
 
-        for i in range(numberCropped):
-            print("Student #" +str(i)+"'s top matches are: ")
-            print(topMatches[i])
+        #for i in range(numberCropped):
+        #    print("Student #" +str(i)+"'s top matches are: ")
+        #    print(topMatches[i])
 
         
         #array to track "final" matches, the index is the cropped face id, the value of each index is the corresponding student portrait match
