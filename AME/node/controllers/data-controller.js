@@ -237,8 +237,6 @@ module.exports.postMeeting= function (req, res) {
         
         meetingStream = bufferToStream(Buffer.from(meetingPic, 'base64'))
         
-        console.log("stream: " + meetingStream.toString())
-        
         Attachment.write({
             filename: meeting._id + '.jpg',
             contentType: 'image/jpg'
@@ -252,11 +250,13 @@ module.exports.postMeeting= function (req, res) {
             }
         )
         
+        depthStream = bufferToStream(Buffer.from(depthPic, 'base64'))
+        
         Attachment.write({
             filename: meeting.id + '_depth.jpg',
             contentType: 'image/jpg'
             },
-            bufferToStream(Buffer.from(depthPic)),
+            depthStream,
             function(err, createdFile){
                 console.log(createdFile._id)
                 meeting.depthPicAttachment_id = createdFile._id
