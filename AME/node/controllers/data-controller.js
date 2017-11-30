@@ -191,7 +191,7 @@ module.exports.postStudent = function (req, res) {
             }   
         )
         
-        Section.findOne({'sectionID': req.body.sectionID}, function(err, section){
+        Section.findOne({'section_id': req.body.section_id}, function(err, section){
             if (err){
                 return res.status(500).send('could not save');
             }
