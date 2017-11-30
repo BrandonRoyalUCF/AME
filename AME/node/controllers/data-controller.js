@@ -241,7 +241,7 @@ module.exports.postMeeting= function (req, res) {
             },
             bufferToStream(Buffer.from(meetingPic)),
             function(error, createdFile){
-                Meeting.updateOne({_id: meeting._id},{$set: {meetingPicAttachment_id: createdFile._id}})
+                Meeting.updateOne({_id: meeting._id},{$set: {meetingPicAttachment_id: createdFile._id.toString()}})
             }
         )
         
@@ -251,11 +251,11 @@ module.exports.postMeeting= function (req, res) {
             },
             bufferToStream(Buffer.from(depthPic)),
             function(err, createdFile){
-                Meeting.updateOne({_id: meeting._id}, {$set: {depthPicAttachment_id: createdFile._id}})
+                Meeting.updateOne({_id: meeting._id}, {$set: {depthPicAttachment_id: createdFile._id.toString()}})
             }
         )
         
-        meetingJSONString = '\"{\\\"meeting_id\\\" : \\\"' + meeting._id.toString() + '\\\" , \\\"section_id\\\" : \\\"' + section_id+ '\\\"}\"';
+        meetingJSONString = '\"{\\\"meeting_id\\\" : \\\"' + meeting._id.toString() + '\\\" , \\\"section_id\\\" : \\\"%a' + section_id+ '\\\"}\"';
         
         console.log("json: " + meetingJSONString);
         
