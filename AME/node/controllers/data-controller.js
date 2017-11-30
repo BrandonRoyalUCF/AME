@@ -237,7 +237,7 @@ module.exports.postMeeting= function (req, res) {
         
         meetingStream = bufferToStream(Buffer.from(meetingPic))
         
-        console.log("stream: " + meetingStream)
+        console.log("stream: " + meetingStream.toString())
         
         Attachment.write({
             filename: meeting._id + '.jpg',
