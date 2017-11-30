@@ -243,7 +243,7 @@ module.exports.postMeeting= function (req, res) {
             filename: meeting._id + '.jpg',
             contentType: 'image/jpg'
             },
-            ,
+            meetingStream,
             function(error, createdFile){
                 console.log(createdFile._id)
                 
