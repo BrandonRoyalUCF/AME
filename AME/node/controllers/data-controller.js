@@ -242,7 +242,9 @@ module.exports.postMeeting= function (req, res) {
             bufferToStream(Buffer.from(meetingPic)),
             function(error, createdFile){
                 console.log(createdFile._id)
-                Meeting.update({_id: meeting._id},{$set: {meetingPicAttachment_id: createdFile._id.toString()}})
+                
+                meeting.meetingPicAttachment_id = createdFile._id
+                meeting.save()
             }
         )
         
@@ -253,7 +255,8 @@ module.exports.postMeeting= function (req, res) {
             bufferToStream(Buffer.from(depthPic)),
             function(err, createdFile){
                 console.log(createdFile._id)
-                Meeting.update({_id: meeting._id}, {$set: {depthPicAttachment_id: createdFile._id.toString()}})
+                meeting.depthPicAttachment_id = createdFile._id
+                meeting.save()
             }
         )
         
