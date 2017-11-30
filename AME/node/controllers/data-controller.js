@@ -216,8 +216,8 @@ module.exports.postMeeting= function (req, res) {
     console.log('postMeeting called');
 
     var section_id = req.body.section_id;
-    var meetingPic = req.body.meetingPic.toString('base64')
-    var depthPic = req.body.depthPic.toString('base64')
+    var meetingPic = req.body.meetingPic
+    var depthPic = req.body.depthPic
     var millisecondsSince1970 = req.body.dateTime
     
     var newMeeting = new Meeting({dateTime: millisecondsSince1970,
@@ -235,11 +235,13 @@ module.exports.postMeeting= function (req, res) {
             return res.status(500).send('could not save');
         }
         
+        meetingStream = bufferToStream(Buffer.from(meetingPic, 'base64'))
+        
         Attachment.write({
             filename: meeting._id + '.jpg',
             contentType: 'image/jpg'
             },
-            bufferToStream(Buffer.from(meetingPic)),
+            meetingStream,
             function(error, createdFile){
                 console.log(createdFile._id)
                 
@@ -248,11 +250,13 @@ module.exports.postMeeting= function (req, res) {
             }
         )
         
+        depthStream = bufferToStream(Buffer.from(depthPic, 'base64'))
+        
         Attachment.write({
             filename: meeting.id + '_depth.jpg',
             contentType: 'image/jpg'
             },
-            bufferToStream(Buffer.from(depthPic)),
+            depthStream,
             function(err, createdFile){
                 console.log(createdFile._id)
                 meeting.depthPicAttachment_id = createdFile._id
