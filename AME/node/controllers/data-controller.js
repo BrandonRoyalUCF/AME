@@ -235,7 +235,7 @@ module.exports.postMeeting= function (req, res) {
             return res.status(500).send('could not save');
         }
         
-        meetingStream = bufferToStream(Buffer.from(meetingPic))
+        meetingStream = bufferToStream(Buffer.from(meetingPic, 'base64'))
         
         console.log("stream: " + meetingStream.toString())
         
