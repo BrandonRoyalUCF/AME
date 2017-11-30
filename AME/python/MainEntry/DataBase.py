@@ -20,7 +20,7 @@ class DataBase():
         db = client['test']
         return db
 
-    def getMeetingObject(self, db, meeting_directory, crops_directory, portraits_directory, portraits_cropped_directory, picnum):
+    def getMeetingObject(self, db, meeting_directory, crops_directory, portraits_directory, portraits_cropped_directory):
         sections = db['sections']
         currentSection = sections.find_one({"_id": ObjectId(self.sectionId)})
         meetings = currentSection['meetings']
@@ -43,16 +43,16 @@ class DataBase():
         meetingPicStream = attachments.get(ObjectId(meetingPicId)).read()
         meetingPicNumpy = np.fromstring(meetingPicStream, np.uint8)
         meeting_img_np = cv2.imdecode(meetingPicNumpy, cv2.IMREAD_COLOR)
-        meetingPicFinalPath = meeting_directory + "\\a"+str(picnum)+".jpg"
-        #cv2.imwrite(meetingPicFinalPath, meeting_img_np)
+        meetingPicFinalPath = meeting_directory + "\\meeting_pic.jpg"
+        cv2.imwrite(meetingPicFinalPath, meeting_img_np)
 
         #get the depth pic from the database and save it to the current folder
         depthPicId = currentMeeting['depthPicAttachment_id']
         depthPicStream = attachments.get(ObjectId(depthPicId)).read()
         depthPicNumpy = np.fromstring(depthPicStream, np.uint8)
         depth_img_np = cv2.imdecode(depthPicNumpy, cv2.IMREAD_COLOR)
-        depthPicFinalPath = meeting_directory + "\\a" +str(picnum)+"d.jpg"
-        #cv2.imwrite(depthPicFinalPath, depth_img_np)
+        depthPicFinalPath = meeting_directory + "\\depth_pic.jpg"
+        cv2.imwrite(depthPicFinalPath, depth_img_np)
 
         meeting = Meeting(self.meetingId, meetingPicFinalPath, depthPicFinalPath, meeting_directory, crops_directory, portraits_directory, portraits_cropped_directory, firstMeeting, count)
         #print("got meeting")
