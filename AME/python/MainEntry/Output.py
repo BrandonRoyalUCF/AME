@@ -70,9 +70,10 @@ class Output():
 
     def findSocialMatrixFirstMeeting(self):
         
+        matchDictionary = self.meeting.getMatchDictionary()
         croppedMatrix = self.meeting.getUnrecognizedSocialMatrix()
         scaledCroppedMatrix = [[0 for i in range(len(matchDictionary))] for j in range(len(matchDictionary))]
-        matchDictionary = self.meeting.getMatchDictionary()
+        
         finalMatches = self.meeting.getFinalMatches()
         for i in range(len(croppedMatrix)):
             if(finalMatches[i] == -1):
