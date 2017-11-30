@@ -151,7 +151,7 @@ class DataBase():
 
         #add the new file id to the meeting
         meetings = db['meetings']
-        meetings.update_one({"_id": ObjectId(self.meetingId)},{"$set": {"meetingPicAttachment_id": id}}) #NEEDS TO CHANGE TO RIGHT ID FOR MEETINGPICATTACHMENT_ID
+        meetings.update_one({"_id": ObjectId(self.meetingId)},{"$set": {"labeledMeetingPicAttachment_id": id}}) #NEEDS TO CHANGE TO RIGHT ID FOR MEETINGPICATTACHMENT_ID
 
         #TESTING ONLY TO SEE IF IMAGE CORRECTLY WRITTEN#
         #meetingPicStream = attachments.get(ObjectId(id)).read()
