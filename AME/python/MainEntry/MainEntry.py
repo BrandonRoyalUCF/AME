@@ -65,13 +65,15 @@ sys.stdout.write(jsonString)
 jsonObject = json.loads(jsonString)
 
 #items from the json String
-meeting_id = jsonObject['meeting_id'] #meeting id string
-section_id = jsonObject['section_id'] #section id string
+#meeting_id = jsonObject['meeting_id'] #meeting id string
+#section_id = jsonObject['section_id'] #section id string
+meeting_id = '5a1f72593696231140b0e180'
+section_id = '5a1f72583696231140b0e111'
 
 #for testing do sys.argv[1] if running test from iphone and node
 #hard code jsonString if running python only test
 
-f = open('log.txt', w)
+f = open('log.txt', "w+")
 f.write('test')
 
 #sys.stdout.write(meeting_id)
