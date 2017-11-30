@@ -69,11 +69,14 @@ class Output():
         return finalAverageMatrix
 
     def findSocialMatrixFirstMeeting(self):
+        
         croppedMatrix = self.meeting.getUnrecognizedSocialMatrix()
-        scaledCroppedMatrix = [[0 for i in range(len(croppedMatrix))] for j in range(len(croppedMatrix))]
+        scaledCroppedMatrix = [[0 for i in range(len(matchDictionary))] for j in range(len(matchDictionary))]
         matchDictionary = self.meeting.getMatchDictionary()
-
+        finalMatches = self.meeting.getFinalMatches()
         for i in range(len(croppedMatrix)):
+            if(finalMatches[i] == -1):
+                continue
                 for j in range(len(croppedMatrix)):
                         scaledCroppedMatrix[i][j] = croppedMatrix[matchDictionary[i]][matchDictionary[j]]
         return scaledCroppedMatrix
