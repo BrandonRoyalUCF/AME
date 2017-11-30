@@ -167,12 +167,8 @@ module.exports.postStudent = function (req, res) {
             },
             bufferToStream(Buffer.from(req.body.portrait, 'base64')),
             function(error, createdFile){
-                Student.findOne({_id: student._id}, function(err, student){
-                    student.studentPortraitAttachment_ids.push(createdFile._id)
-                    student.save()
-                })
             
-                studentJSONString = '{\"student_id\": \"'+ student._id+'\",\"studentPortraitAttachmentIds\": \"'+  +'\"}';
+                studentJSONString = '{\"student_id\": \"'+ student._id+'\",\"studentPortraitAttachmentIds\": [\"'+ createdFile._id +'\"]}';
             
                 const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/MainEntry/MainEntry.py ' + meetingJSONString, function (err, stdout, stderr){
                     if (err){
