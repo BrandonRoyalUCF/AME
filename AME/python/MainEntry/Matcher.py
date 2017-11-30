@@ -438,8 +438,13 @@ class Matcher():
 
         print("done with initial delete")
 
+        allMatched = True
         for i in range(numberCropped):
-            if(alreadyMatchedCropped[i] == True):
+            if(finalMatch[i] == -1):
+                allMatched = False
+
+        for i in range(numberCropped):
+            if(alreadyMatchedCropped[i] == True or allMatched == True):
                     continue
             while(arrayMatchesLeft[i] > 0):
                 
