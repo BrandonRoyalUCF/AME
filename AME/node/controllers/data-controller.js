@@ -170,7 +170,7 @@ module.exports.postStudent = function (req, res) {
             
                 studentJSONString = '{\"student_id\": \"'+ student._id+'\",\"studentPortraitAttachmentIds\": [\"'+ createdFile._id +'\"]}';
             
-                const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/MainEntry/MainEntry.py ' + meetingJSONString, function (err, stdout, stderr){
+                const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/MainEntry/CropPortraitsScript.py ' + studentJSONString, function (err, stdout, stderr){
                     if (err){
                         console.log(err)
                     }
