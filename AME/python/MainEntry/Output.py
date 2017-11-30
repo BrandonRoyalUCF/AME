@@ -25,6 +25,8 @@ class Output():
             x, y, w, h = cropped.getOrginalCoordinates()
             imageOrginalWithAttedance = cv2.rectangle(imageOrginalWithAttedance, (x, y), (x+w, y+h), (0, 255, 0), 5)
             fullname = cropped.getStudentMatchFullName()
+            if(fullname == ""):
+                fullname = "Does Not Belong"
             imageOrginalWithAttedance = cv2.putText(imageOrginalWithAttedance, fullname, (x,y-10), cv2.FONT_HERSHEY_COMPLEX, 1.1, (0, 255, 255), 3)
         path = self.meeting.getMeetingDirectory() + "//attendace_results" + appendToName + ".jpg"
         cv2.imwrite(path, imageOrginalWithAttedance)
