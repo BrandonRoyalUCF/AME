@@ -237,7 +237,7 @@ module.exports.postMeeting= function (req, res) {
         Section.findOne({_id: section_id}, function(err, section){
             console.log("section_id: " + section_id)
             
-            section.meetings.push(meeting._id)
+            section.meetings.push({dateTime: meeting.dateTime, _id: meeting._id})
             section.save()
             
             Attachment.write({

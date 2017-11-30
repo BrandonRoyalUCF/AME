@@ -8,5 +8,5 @@ module.exports = mongoose.model('Section', {
     students: [{name: String, studentID: String, _id: String}],//"lastName, firstName" , _id
     socialData: [{student_id: String, 
                   relationships: [{student_id: String, value: Number}]}],
-    meetings: [{dateTime: String, _id: String}]
+    meetings: [{dateTime: Number, _id: String}]
 });
