@@ -115,7 +115,8 @@ class DataBase():
         for student in socialData:
             mainId = student['student_id']
             mainClassNum = mappings[mainId]
-            for relation in socialData['relationships']:
+            relations = socialData['relationships']
+            for relation in relations:
                 secondId = relation['student_id']
                 secondClassNum = mappings[secondId]
                 value = relation['value']
