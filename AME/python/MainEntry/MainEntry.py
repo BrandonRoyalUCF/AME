@@ -84,7 +84,7 @@ else:
 #print(meeting_id)
 #print(section_id)
 
-print("Test For Meeting Picture " + str(testpicnum) + ":")
+#print("Test For Meeting Picture " + str(testpicnum) + ":")
 #create a new folder for the meeting with needed subfolders
 current_directory = os.getcwd()
 meeting_directory = os.path.join(current_directory, str(meeting_id))
