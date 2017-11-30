@@ -71,6 +71,8 @@ section_id = jsonObject['section_id'] #section id string
 #for testing do sys.argv[1] if running test from iphone and node
 #hard code jsonString if running python only test
 
+f = open('log.txt', w)
+f.write('test')
 
 #sys.stdout.write(meeting_id)
 #sys.stdout.write(section_id)
@@ -97,13 +99,13 @@ portraits_cropped_directory = os.path.join(meeting_directory, "portraits_cropped
 if not os.path.exists(portraits_cropped_directory):
     os.makedirs(portraits_cropped_directory)
 
-sys.stdout.write("created folders")
+f.write('created directories')
 
 #Create a new DataBase object and connect to the database
 database = DataBase(meeting_id, section_id)
 db = database.connectToDB()
 
-sys.stdout.write("connected to database")
+f.write('connected to db')
 
 #create the meeting object for the current meeting
 meeting = database.getMeetingObject(db, meeting_directory, crops_directory, portraits_directory, portraits_cropped_directory)
