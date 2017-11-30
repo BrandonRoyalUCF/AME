@@ -167,7 +167,7 @@ module.exports.postStudent = function (req, res) {
             },
             bufferToStream(Buffer.from(req.body.portrait, 'base64')),
             function(error, createdFile){
-                student.findOne({_id: student._id}, function(err, student){
+                Student.findOne({_id: student._id}, function(err, student){
                     student.studentPortraitAttachment_ids.push(createdFile._id)
                     student.save()
                 })
