@@ -508,6 +508,7 @@ class Matcher():
                                     break
                                     
                 if deleted == False:
+                    countMatched = countMatched + 1
                     finalMatch[i] = topMatch
                     matchDictionary[topMatch] = i
                     alreadyMatchedCropped[i] = True
