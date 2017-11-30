@@ -197,13 +197,17 @@ module.exports.postMeeting= function (req, res) {
     console.log('postMeeting called');
 
     var section_id = req.body.section_id;
-
     var meetingPic = req.body.meetingPic.toString()
+    var depthPic = req.body.depthPic.toString()
+    var millisecondsSince1970 = req.body.dateTime
     
-    var newMeeting = new Meeting({dateTime: 0,
+    var newMeeting = new Meeting({dateTime: millisecondsSince1970,
                                   meetingPicAttachment_id: '',
+                                  labeledMeetingPicAttachment_id: '',
+                                  depthPicAttachment_id: ''
                                   attendance: [],
                                   croppedPics: [],
+                                  socialData: [],
                                   section_id: section_id});
                                   
     newMeeting.save(function(err, meeting){
@@ -216,16 +220,25 @@ module.exports.postMeeting= function (req, res) {
             filename: meeting._id + '.jpg',
             contentType: 'image/jpg'
             },
-            bufferToStream(bufferToStream(Buffer.from(req.body.meetingPic)),
+            bufferToStream(Buffer.from(meetingPic)),
             function(error, createdFile){
-                meeting.meetingPicAttachment_id = createdFile._id;
-                meeting.save();
-            })
+                Meeting.updateOne({_id: meeting._id},{$set: {meetingPicAttachment_id: createdFile._id}})
+            }
+        )
+        
+        Attachment.write({
+            filename: meeting.id + '_depth.jpg',
+            contentType: 'image/jpg'
+            },
+            bufferToStream(Buffer.from(depthPic)),
+            function(err, createdFile){
+                Meeting.updateOne({_id: meeting._id}, {$set: {depthPicAttachment_id: createdFile._id}})
+            }
         )
         
         meetingJSONString = '{\"meeting_id\": \"'+ meeting._id+'\",\"section_id\": \"'+ section_id+'\"}';
         
-        const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/imgProc/match.py ' + meetingJSONString, function (err, stdout, stderr){
+        const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/MainEntry/MainEntry.py ' + meetingJSONString, function (err, stdout, stderr){
             if (err){
                 console.log(err)
             }

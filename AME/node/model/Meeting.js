@@ -8,7 +8,8 @@ module.exports = mongoose.model('Meeting', {
     labeledMeetingPicAttachment_id: String,
     depthPicAttachment_id: String,
     attendance: [{student_id: String, present: Boolean}],
-    croppedPics: [{student_id: String, croppedPicAttachment_id: String}],
+    croppedPics: [{student_id: String, 
+                   croppedPicAttachment_id: String}],
     socialData: [{student_id: String, 
                   relationships: [{student_id: String, value: Number}]}],
     section_id: String
