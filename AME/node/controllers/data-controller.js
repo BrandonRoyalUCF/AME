@@ -254,7 +254,7 @@ module.exports.postMeeting= function (req, res) {
             },
             bufferToStream(Buffer.from(depthPic)),
             function(err, createdFile){
-                console.log(createdFile._id)≈ß
+                console.log(createdFile._id)
                 meeting.depthPicAttachment_id = createdFile._id
                 meeting.save()
             }
