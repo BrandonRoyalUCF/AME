@@ -67,7 +67,7 @@ if(local):
 else:
     #Get the Json String Passed in from the Node and load it
     jsonString = sys.argv[1]
-	print(jsonString)
+    print(jsonString)
     jsonObject = json.loads(jsonString)
 
     #items from the json String
