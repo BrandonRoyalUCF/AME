@@ -31,7 +31,7 @@
     },
     {
       "firstName": "Kelly",
-      "lastName": "Test",
+      "lastName": "Mitchell",
       "studentID": "ke000001"
     },
     {
@@ -41,7 +41,7 @@
     },
     {
       "firstName": "Jesse",
-      "lastName": "Test",
+      "lastName": "Jeziorski",
       "studentID": "je000001"
     },
     {
@@ -55,13 +55,13 @@
       "studentID": "ni000002"
     },
     {
-      "firstName": "White",
-      "lastName": "Twin",
+      "firstName": "Connor",
+      "lastName": "Beluscak",
       "studentID": "wh000001"
     },
     {
-      "firstName": "Black",
-      "lastName": "Twin",
+      "firstName": "Kyle",
+      "lastName": "Beluscak",
       "studentID": "bl000001"
     },
     {
