@@ -59,7 +59,7 @@ if(mode == "DepthDataTest"):
 # Full Testing Block Entry
 #########################################################
 
-local = True
+local = False
 if(local):
     #items from the json String
     meeting_id = "5a1eee7bb2d9e60f404efc16" #meeting id string
@@ -82,7 +82,7 @@ else:
 
 #print(meeting_id)
 #print(section_id)
-testpicnum = 7
+
 print("Test For Meeting Picture " + str(testpicnum) + ":")
 #create a new folder for the meeting with needed subfolders
 current_directory = os.getcwd()
