@@ -114,7 +114,7 @@ class DataBase():
         socialData = currentSection['socialData']
         for student in socialData:
             mainId = student['student_id']
-            mainClassNum = mappings[mainID]
+            mainClassNum = mappings[mainId]
             for relation in socialData['relationships']:
                 secondId = relation['student_id']
                 secondClassNum = mappings[secondId]
