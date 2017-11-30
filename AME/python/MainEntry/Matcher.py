@@ -337,10 +337,17 @@ class Matcher():
     ##############################################################
     def matchStudents(self, confidenceMatrix, useDelete, useSocial):
         
-        #correctMatchesInputOne = {19, }
+
+        #this is number of faces retrieved from the class portrait picture
+        numberCropped = len(confidenceMatrix)
+        #print("Number of cropped faces: " + str(numberCropped))
+
+        #this is the number of total students in the class
+        numberTotalStudents = len(confidenceMatrix[0]) 
+        #print("Total Number of Students in the class: " + str(numberTotalStudents))
 
         minConfidence = 200
-        topMatchesTaken = 10
+        topMatchesTaken = numberTotalStudents
         if(useSocial == True):
             closenessThreshold = 10
         else:

@@ -20,9 +20,9 @@ class StartProcessing():
         #print("Starting processing")
         imageProcessor = ImageProcessing(self.meeting, self.arrayStudents, self.size)
         confidenceMatrix = imageProcessor.processImageAndGetConfidenceMatrix()
-        #print("done confidence:")
-        #for i in range(len(confidenceMatrix)):
-        #    print(confidenceMatrix[i])
+        print("done confidence:")
+        for i in range(len(confidenceMatrix)):
+            print(confidenceMatrix[i])
 
         useDelete = True
         useSocial = True

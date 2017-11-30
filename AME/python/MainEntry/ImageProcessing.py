@@ -69,7 +69,7 @@ class ImageProcessing():
         imagePath = self.meeting.getMeetingPicPath() #class picture
         image = cv2.imread(imagePath)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        faces = self.faceCascade.detectMultiScale(gray, scaleFactor=1.35, minNeighbors=10, minSize=(30, 30))
+        faces = self.faceCascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=10, minSize=(30, 30))
 
         #crops all faces from the class picure and saves them locally
         i=0
