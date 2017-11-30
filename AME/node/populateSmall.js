@@ -80,7 +80,7 @@ mongoose.connection.on('open', function() {
                                     },
                                     fs.createReadStream('C:/AME/AME/node/SmallMeetingPic/depthPic.jpg'),
                                     function(error, depthPic){
-                                        var newMeeting = new Meeting({
+                                        /*var newMeeting = new Meeting({
                                             dateTime: '',
                                             meetingPicAttachment_id: meetingPic._id,
                                             depthPicAttachment_id: depthPic._id,
@@ -98,7 +98,7 @@ mongoose.connection.on('open', function() {
                                             
                                             section.save()
                                             
-                                        })
+                                        })*/
                                     }
                                 )
                             }

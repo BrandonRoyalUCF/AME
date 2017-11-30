@@ -216,8 +216,8 @@ module.exports.postMeeting= function (req, res) {
     console.log('postMeeting called');
 
     var section_id = req.body.section_id;
-    var meetingPic = req.body.meetingPic.toString()
-    var depthPic = req.body.depthPic.toString()
+    var meetingPic = req.body.meetingPic.toString('base64')
+    var depthPic = req.body.depthPic.toString('base64')
     var millisecondsSince1970 = req.body.dateTime
     
     var newMeeting = new Meeting({dateTime: millisecondsSince1970,
