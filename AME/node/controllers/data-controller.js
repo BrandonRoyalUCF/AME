@@ -261,6 +261,8 @@ module.exports.postMeeting= function (req, res) {
         )
         
         Section.findOne({_id: section_id}, function(err, section){
+            console.log("section_id: " + section._id)
+            
             section.meetings.push(meeting._id)
             section.save()
         })
