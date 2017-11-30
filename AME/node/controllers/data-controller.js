@@ -238,56 +238,64 @@ module.exports.postMeeting= function (req, res) {
         
         meetingStream = bufferToStream(Buffer.from(meetingPic, 'base64'))
         
-        Attachment.write({
-            filename: meeting._id + '.jpg',
-            contentType: 'image/jpg'
-            },
-            meetingStream,
-            function(error, createdFile){
-                console.log(createdFile._id)
-                
-                meeting.meetingPicAttachment_id = createdFile._id
-                meeting.save()
-            }
-        )
-        
-        depthStream = bufferToStream(Buffer.from(depthPic, 'base64'))
-        
-        Attachment.write({
-            filename: meeting.id + '_depth.jpg',
-            contentType: 'image/jpg'
-            },
-            depthStream,
-            function(err, createdFile){
-                console.log(createdFile._id)
-                meeting.depthPicAttachment_id = createdFile._id
-                meeting.save()
-            }
-        )
-        
         Section.findOne({_id: section_id}, function(err, section){
             console.log("section_id: " + section_id)
             
             section.meetings.push(meeting._id)
             section.save()
+            
+            Attachment.write({
+                filename: meeting._id + '.jpg',
+                contentType: 'image/jpg'
+                },
+                meetingStream,
+                function(error, createdFile){
+                    console.log(createdFile._id)
+
+                    meeting.meetingPicAttachment_id = createdFile._id
+                    meeting.save()
+                
+                    depthStream = bufferToStream(Buffer.from(depthPic, 'base64'))
+        
+                    Attachment.write({
+                        filename: meeting.id + '_depth.jpg',
+                        contentType: 'image/jpg'
+                        },
+                        depthStream,
+                        function(err, createdFile){
+                            console.log(createdFile._id)
+                            meeting.depthPicAttachment_id = createdFile._id
+                            meeting.save()
+                        
+                        meetingJSONString = '\"{\\\"meeting_id\\\" : \\\"' + meeting._id.toString() + '\\\" , \\\"section_id\\\" : \\\"' + section_id+ '\\\"}\"';
+        
+                        console.log("json: " + meetingJSONString);
+
+                        const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/MainEntry/MainEntry.py ' + meetingJSONString, function (err, stdout, stderr){
+                            if (err){
+                                console.log(err)
+                            }
+                            if (stderr) {
+                                console.log(stderr)
+                            }
+
+                            console.log(stdout)
+
+                            sendToken(res, stdout)
+                        });
+                        }
+                    )
+                }
+            )
         })
         
-        meetingJSONString = '\"{\\\"meeting_id\\\" : \\\"' + meeting._id.toString() + '\\\" , \\\"section_id\\\" : \\\"' + section_id+ '\\\"}\"';
         
-        console.log("json: " + meetingJSONString);
         
-        const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/MainEntry/MainEntry.py ' + meetingJSONString, function (err, stdout, stderr){
-            if (err){
-                console.log(err)
-            }
-            if (stderr) {
-                console.log(stderr)
-            }
-            
-            console.log(stdout)
-            
-            sendToken(res, stdout)
-        });
+        
+        
+        
+        
+        
     })
 }
 
