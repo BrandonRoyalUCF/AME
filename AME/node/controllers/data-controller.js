@@ -253,7 +253,7 @@ module.exports.postMeeting= function (req, res) {
             bufferToStream(Buffer.from(depthPic)),
             function(err, createdFile){
                 console.log(createdFile._id)
-                Meeting.updateOne({_id: meeting._id}, {$set: {depthPicAttachment_id: createdFile._id.toString()}})
+                Meeting.updateOne({_id: mongoose.Types.ObjectId(meeting._id)}, {$set: {depthPicAttachment_id: createdFile._id.toString()}})
             }
         )
         
