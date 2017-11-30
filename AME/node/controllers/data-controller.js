@@ -152,8 +152,6 @@ module.exports.postSection = function(req, res) {
 
 module.exports.postStudent = function (req, res) {
     
-    
-    
     var newStudent = new Student({firstName: req.body.firstName,
                                   lastName: req.body.lastName,
                                   studentID: req.body.studentID,
@@ -167,9 +165,12 @@ module.exports.postStudent = function (req, res) {
             filename: student._id + '.jpg',
             contentType: 'image/jpg'
             },
-            bufferToStream(Buffer.from(req.body.studentPortrait)),
+            bufferToStream(Buffer.from(req.body.portrait, 'base64')),
             function(error, createdFile){
-                Student.updateOne({_id: student._id}, {$push: {studentPortraitAttachmentId}})
+                student.findOne({_id: student._id}, function(err, student){
+                    student.studentPortraitAttachment_ids.push(createdFile._id)
+                    student.save()
+                })
             
                 studentJSONString = '{\"student_id\": \"'+ student._id+'\",\"studentPortraitAttachmentIds\": \"'+  +'\"}';
             
