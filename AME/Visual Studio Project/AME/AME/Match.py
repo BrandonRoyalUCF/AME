@@ -15,48 +15,59 @@ import io
 #finalJson = start.startRecognition()
 
 #Get the Json String Passed in from the Node and load it
-jsonString = sys.argv[1]
-jsonObject = json.loads(jsonString)
+#jsonString = sys.argv[1]
+#jsonObject = json.loads(jsonString)
 
 
-#items from the json String
-meeting_id = jsonObject['meeting_id'] #object id string
-#student_ids = jsonObject['student_ids'] #array of object id strings
-sys.stdout.write(meeting_id)
-#Connect to the database and get the meeting pic buffer based off the meeting id
-client = MongoClient('mongodb://localhost:27017/')
-db = client['test']
+##items from the json String
+#meeting_id = jsonObject['meeting_id'] #object id string
+##student_ids = jsonObject['student_ids'] #array of object id strings
+#sys.stdout.write(meeting_id)
+##Connect to the database and get the meeting pic buffer based off the meeting id
+#client = MongoClient('mongodb://localhost:27017/')
+#db = client['test']
 
-#first get the meeting picture from the database and store it locally
-meetings = db['meetings']
-newMeeting = meetings.find_one({"_id": ObjectId(meeting_id)})
+##first get the meeting picture from the database and store it locally
+#meetings = db['meetings']
+#newMeeting = meetings.find_one({"_id": ObjectId(meeting_id)})
 
-sys.stdout.write(meeting_id)
+#sys.stdout.write(meeting_id)
 
-meetingPicBuffer = newMeeting['meetingPic']
-directory = 'C://AmeTesting//' + meeting_id
-os.makedirs(directory)
-pathMeetingPic = directory + '//' + meeting_id + '.png'
-image = Image.open(io.BytesIO(meetingPicBuffer))
-image.save(pathMeetingPic)
+#meetingPicBuffer = newMeeting['meetingPic']
+#directory = 'C://AmeTesting//' + meeting_id
+#os.makedirs(directory)
+#pathMeetingPic = directory + '//' + meeting_id + '.png'
+#image = Image.open(io.BytesIO(meetingPicBuffer))
+#image.save(pathMeetingPic)
 
-sys.stdout.write(pathMeetingPic)
+#sys.stdout.write(pathMeetingPic)
 
-#now for each student in the class, get their individual pictures and store them locally
+##now for each student in the class, get their individual pictures and store them locally
 
-#students = db['students']
-arrayOfStudentPicPaths = []
+##students = db['students']
+#arrayOfStudentPicPaths = []
 #for student_id in student_ids:
 #    student = students.find_one({"_id": student_id})
     
 #    path = 'C://AmeTesting//studentPics//' + student_id +'.png'
-    #arrayOfStudentPicPaths.append(path)
+#    arrayOfStudentPicPaths.append(path)
 #    studentPortraitBuffer = student['studentPortrait']
     
 #    image = Image.open(io.BytesIO(studentPortraitBuffer))
 #    image.save(path)
-    
-start = StartRecognition(student_ids, meeting_id, pathMeetingPic, arrayOfStudentPicPaths, directory)
+
+testmeetingID = '1234'
+testStudentIds = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+testDirectory = 'C://AmeTesting//' + testmeetingID
+os.makedirs(testDirectory)
+testPathMeetingPic = testDirectory + '//' + testmeetingID + '.png'
+testArrayOfStudentPicPaths = []
+for student_id in testStudentIds:  
+    path = testDirectory + '//studentPics//' + str(student_id) +'.png'
+    testArrayOfStudentPicPaths.append(path)
+
+
+start = StartRecognition(testStudentIds, testmeetingID, pathMeetingPic, testArrayOfStudentPicPaths, testDirectory)
 finalJson = start.startRecognition()
 
 sys.stdout.write(finalJson)
