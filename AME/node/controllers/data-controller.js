@@ -255,7 +255,7 @@ module.exports.postMeeting= function (req, res) {
             }
         )
         
-        meetingJSONString = '\"{\"meeting_id\" : ' + meeting._id.toString() + ' , \"section_id\" : ' + section_id+ '}\"';
+        meetingJSONString = '\"{\\\"meeting_id\\\" : ' + meeting._id.toString() + ' , \\\"section_id\\\" : ' + section_id+ '}\"';
         
         console.log("json: " + meetingJSONString);
         
