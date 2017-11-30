@@ -108,7 +108,7 @@ database = DataBase(meeting_id, section_id)
 db = database.connectToDB()
 
 #create the meeting object for the current meeting
-meeting = database.getMeetingObject(db, meeting_directory, crops_directory, portraits_directory, portraits_cropped_directory, testpicnum)
+meeting = database.getMeetingObject(db, meeting_directory, crops_directory, portraits_directory, portraits_cropped_directory)
 
 #get an array of Student objects for the current meeting
 arrayStudents, classNumToStudentIdDict , studentIdToClassNumDict = database.getStudents(db, portraits_cropped_directory)
