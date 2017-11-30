@@ -176,6 +176,10 @@ class ImageProcessing():
         #print(confMatrix)
         #print(confMatrix[1][7])
 
+        print("done confidence:")
+        for i in range(len(confMatrix)):
+            print(confMatrix[i])
+
         numberDetetedFaces = len(confMatrix)
         numberActualStudents = len(self.arrayStudents)
 
