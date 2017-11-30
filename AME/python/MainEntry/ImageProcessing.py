@@ -77,7 +77,10 @@ class ImageProcessing():
             cropImg = image[y:y+h, x:x+w]
             gray = cv2.cvtColor(cropImg, cv2.COLOR_BGR2GRAY)  # turn portrait to grayscale
             shrink = cv2.resize(gray, (self.size, self.size))
-            cv2.imwrite(self.meeting.getCropsDirectory()+"//"+str(i)+'.jpg', shrink)
+            strnum = str(i)
+            if(len(strnum) == 1):
+                strnum = "0"+strnum
+            cv2.imwrite(self.meeting.getCropsDirectory()+"//"+str(strnum)+'.jpg', shrink)
             i += 1
 
     def prepareTraining(self, path):
