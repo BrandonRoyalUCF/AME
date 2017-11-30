@@ -175,6 +175,24 @@ class ImageProcessing():
         confMatrix = numpy.array(confMatrix)  #2d list (list of lists) -> 2d matrix
         #print(confMatrix)
         #print(confMatrix[1][7])
+
+        numberDetetedFaces = len(confMatrix)
+        numberActualStudents = len(self.arrayStudents)
+
+        while (numberDetetedFaces > numberActualStudents):
+            currentHightest = 0
+            currentHighestCroppedNum = -1
+            for i in range(len(confMatrix)):
+                for j in range(len(confMatrix[0])):
+                    if(confMatrix[i][j] > currentHightest):
+                        currentHightest = confMatrix[i][j]
+                        currentHighestCroppedNum = i
+            del confMatrix[currentHighestCroppedNum]
+            numberDetetedFaces -= 1
+
+
+
+
         return confMatrix
 
      

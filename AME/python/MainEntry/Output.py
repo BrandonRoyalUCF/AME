@@ -53,9 +53,9 @@ class Output():
         matchDictionary = self.meeting.getMatchDictionary() 
         #now using the match dictionary reoganize the croppedMatrix to have the right indexing for the dbMatrix
         for i in range(len(dbMatrix)):
-            if(students[i].getCroppedFaceMatchId() != -1):
+            if(self.students[i].getCroppedFaceMatchId() != -1):
                 for j in range(len(dbMatrix)):
-                    if(students[i].getCroppedFaceMatchId() != -1):
+                    if(self.students[i].getCroppedFaceMatchId() != -1):
                         scaledCroppedMatrix[i][j] = croppedMatrix[matchDictionary[i]][matchDictionary[j]]
 
         

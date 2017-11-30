@@ -445,29 +445,29 @@ class Matcher():
 
         print("done with initial delete")
 
-        allMatched = True
-        for i in range(numberCropped):
-            if(finalMatch[i] == -1):
-                allMatched = False
+        #allMatched = True
+        #for i in range(numberCropped):
+        #    if(finalMatch[i] == -1):
+        #        allMatched = False
 
         for i in range(numberCropped):
             if(alreadyMatchedCropped[i] == True or allMatched == True):
                     continue
             while(arrayMatchesLeft[i] > 0):
                 
-                allMatched = True
-                for i in range(numberCropped):
-                    if(finalMatch[i] == -1):
-                        allMatched = False
-                if(allMatched):
-                    break
+                #allMatched = True
+                #for i in range(numberCropped):
+                #    if(finalMatch[i] == -1):
+                #        allMatched = False
+                #if(allMatched):
+                #    break
 
                 #print('top matches', topMatches)
                 topMatch = topMatches[i][0]
                 #print("for cropped face " + str(i) + " we are considering student " + str(topMatch))
                 if(alreadyMatchedPortrait[topMatch] == True):
                     del topMatches[i][0]
-                    arrayMatchesLeft[i] = arrayMatchesLeft[i] - 1
+                    #arrayMatchesLeft[i] = arrayMatchesLeft[i] - 1
                     continue
                 deleted = False
                 for j in range(numberCropped):
