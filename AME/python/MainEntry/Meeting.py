@@ -102,7 +102,7 @@ class Meeting():
         return self.matchDictionary
 
     def getFinalMatches(self):
-        return self.finalMaches
+        return self.finalMatches
 
     def setFinalMatches(self, matches):
         self.finalMatches = matches
