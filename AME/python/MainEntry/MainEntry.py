@@ -65,10 +65,10 @@ sys.stdout.write(jsonString)
 jsonObject = json.loads(jsonString)
 
 #items from the json String
-#meeting_id = jsonObject['meeting_id'] #meeting id string
-#section_id = jsonObject['section_id'] #section id string
-meeting_id = '5a1f72593696231140b0e180'
-section_id = '5a1f72583696231140b0e111'
+meeting_id = jsonObject['meeting_id'] #meeting id string
+section_id = jsonObject['section_id'] #section id string
+#meeting_id = '5a1f72593696231140b0e180'
+#section_id = '5a1f72583696231140b0e111'
 
 #for testing do sys.argv[1] if running test from iphone and node
 #hard code jsonString if running python only test
@@ -84,7 +84,7 @@ f.write('test')
 
 #print("Test For Meeting Picture " + str(testpicnum) + ":")
 #create a new folder for the meeting with needed subfolders
-current_directory = os.getcwd()
+current_directory = "C:"
 meeting_directory = os.path.join(current_directory, str(meeting_id))
 if not os.path.exists(meeting_directory):
     os.makedirs(meeting_directory)
