@@ -80,7 +80,9 @@ class ImageProcessing():
             strnum = str(i)
             if(len(strnum) == 1):
                 strnum = "0"+strnum
-            cv2.imwrite(self.meeting.getCropsDirectory()+"//"+str(strnum)+'.jpg', shrink)
+            print(strnum, len(strnum))
+            
+            cv2.imwrite(self.meeting.getCropsDirectory()+"//"+strnum+'.jpg', shrink)
             i += 1
 
     def prepareTraining(self, path):
