@@ -112,15 +112,17 @@ class DataBase():
         sections = db['sections']
         currentSection = sections.find_one({"_id": ObjectId(self.sectionId)})
         socialData = currentSection['socialData']
+        i=0
         for student in socialData:
             mainId = student['student_id']
             mainClassNum = mappings[mainId]
-            relations = socialData['relationships']
+            relations = socialData[i]['relationships']
             for relation in relations:
                 secondId = relation['student_id']
                 secondClassNum = mappings[secondId]
                 value = relation['value']
                 socialMatrix[mainClassNum][secondClassNum] = value
+            i+=1
 
         meeting.setAverageSocialMatrix(socialMatrix)
 
