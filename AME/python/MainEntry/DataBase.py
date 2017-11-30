@@ -100,7 +100,7 @@ class DataBase():
         #print("got all students")
         return arrayStudents, classNumToStudentIdDict, studentIdToClassNumDict
 
-    def getSocialData(self, meeting):
+    def getSocialData(self, db, meeting):
 
         #determine how many students there are and setup an empty social matrix
         numberStudents = meeting.getCountTotalStudents()

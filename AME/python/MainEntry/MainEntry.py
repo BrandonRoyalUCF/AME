@@ -127,7 +127,7 @@ meeting.setStudentIdToClassNumDict(studentIdToClassNumDict)
 meeting.setCountTotalStudents(len(arrayStudents))
 
 if(meeting.getFirstMeeting() == False):
-    database.getSocialData(meeting)
+    database.getSocialData(db, meeting)
 
 #print(classNumToStudentIdDict)
 
