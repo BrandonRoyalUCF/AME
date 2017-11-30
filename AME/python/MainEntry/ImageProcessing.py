@@ -176,23 +176,23 @@ class ImageProcessing():
         #print(confMatrix)
         #print(confMatrix[1][7])
 
-        print("done confidence:")
-        for i in range(len(confMatrix)):
-            print(confMatrix[i])
+        #print("done confidence:")
+        #for i in range(len(confMatrix)):
+        #    print(confMatrix[i])
 
         numberDetetedFaces = len(confMatrix)
         numberActualStudents = len(self.arrayStudents)
 
-        while (numberDetetedFaces > numberActualStudents):
-            currentHightest = 0
-            currentHighestCroppedNum = -1
-            for i in range(len(confMatrix)):
-                for j in range(len(confMatrix[0])):
-                    if(confMatrix[i][j] > currentHightest):
-                        currentHightest = confMatrix[i][j]
-                        currentHighestCroppedNum = i
-            confMatrix = numpy.delete(confMatrix, currentHighestCroppedNum, 0)
-            numberDetetedFaces -= 1
+        #while (numberDetetedFaces > numberActualStudents):
+        #    currentHightest = 0
+        #    currentHighestCroppedNum = -1
+        #    for i in range(len(confMatrix)):
+        #        for j in range(len(confMatrix[0])):
+        #            if(confMatrix[i][j] > currentHightest):
+        #                currentHightest = confMatrix[i][j]
+        #                currentHighestCroppedNum = i
+        #    confMatrix = numpy.delete(confMatrix, currentHighestCroppedNum, 0)
+        #    numberDetetedFaces -= 1
 
 
 
