@@ -257,6 +257,8 @@ module.exports.postMeeting= function (req, res) {
         
         meetingJSONString = "{\"meeting_id\" : \"" + meeting._id.toString() + "\" , \"section_id\" : \""+ section_id+"\"}";
         
+        console.log("json: " + meetingJSONString);
+        
         const process = exec('C:/Users/Administrator/AppData/Local/Programs/Python/Python36/python C:/AME/AME/python/MainEntry/MainEntry.py ' + meetingJSONString, function (err, stdout, stderr){
             if (err){
                 console.log(err)
