@@ -59,20 +59,14 @@ if(mode == "DepthDataTest"):
 # Full Testing Block Entry
 #########################################################
 
-local = False
-if(local):
-    #items from the json String
-    meeting_id = "5a1eee7bb2d9e60f404efc16" #meeting id string
-    section_id = "5a1eee79b2d9e60f404efafc" #section id string
-else:
-    #Get the Json String Passed in from the Node and load it
-    jsonString = sys.argv[1]
-    sys.stdout.write(jsonString)
-    jsonObject = json.loads(jsonString)
+#Get the Json String Passed in from the Node and load it
+jsonString = sys.argv[1]
+sys.stdout.write(jsonString)
+jsonObject = json.loads(jsonString)
 
-    #items from the json String
-    meeting_id = jsonObject['meeting_id'] #meeting id string
-    section_id = jsonObject['section_id'] #section id string
+#items from the json String
+meeting_id = jsonObject['meeting_id'] #meeting id string
+section_id = jsonObject['section_id'] #section id string
 
 #for testing do sys.argv[1] if running test from iphone and node
 #hard code jsonString if running python only test
@@ -102,6 +96,8 @@ if not os.path.exists(portraits_directory):
 portraits_cropped_directory = os.path.join(meeting_directory, "portraits_cropped")
 if not os.path.exists(portraits_cropped_directory):
     os.makedirs(portraits_cropped_directory)
+
+sys.stdout.write("created folders")
 
 #Create a new DataBase object and connect to the database
 database = DataBase(meeting_id, section_id)
