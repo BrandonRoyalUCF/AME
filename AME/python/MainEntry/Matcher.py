@@ -467,7 +467,7 @@ class Matcher():
                 #print("for cropped face " + str(i) + " we are considering student " + str(topMatch))
                 if(alreadyMatchedPortrait[topMatch] == True):
                     del topMatches[i][0]
-                    arrayMatchesLeft[i] = arrayMatchesLeft - 1
+                    arrayMatchesLeft[i] = arrayMatchesLeft[i] - 1
                     continue
                 deleted = False
                 for j in range(numberCropped):
