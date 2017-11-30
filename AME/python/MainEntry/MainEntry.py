@@ -84,7 +84,7 @@ f.write('test')
 
 #print("Test For Meeting Picture " + str(testpicnum) + ":")
 #create a new folder for the meeting with needed subfolders
-current_directory = "C:"
+current_directory = os.getcwd()
 meeting_directory = os.path.join(current_directory, str(meeting_id))
 if not os.path.exists(meeting_directory):
     os.makedirs(meeting_directory)
