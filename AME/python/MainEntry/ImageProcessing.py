@@ -121,6 +121,8 @@ class ImageProcessing():
         min = 1000
         size = 0
 
+        f = open(self.meeting.getMeetingDirectory() + '\\baseRecognitionLog.txt', "w+")
+
         cropList = [os.path.join(crop, f) for f in os.listdir(crop)]  #put detected faces in a list
         baseAttendanceDict = {}
         faceNum=1
@@ -165,6 +167,8 @@ class ImageProcessing():
 
             confMatrix.append(getMinConf)
             getMinConf = []  #empty the list
+
+            f.write("Matched Cropped Face" + numActual + " to Student " + numPredicted + " with confidence of: " + conf)
 
             baseAttendanceDict[i] = numPredicted
             if numActual == numPredicted:
