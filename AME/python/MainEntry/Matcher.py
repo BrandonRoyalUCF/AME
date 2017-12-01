@@ -479,7 +479,7 @@ class Matcher():
                     continue
                 deleted = False
                 for j in range(numberCropped):
-                    if(j != i and arrayMatchesLeft[j] > 0):
+                    if(j != i and arrayMatchesLeft[j] > 0 and len(topMatches[j]) > 0):
                         curTopMatch = topMatches[j][0]
                         #print(topMatch, " ", curTopMatch)
                         if(topMatch == curTopMatch):
