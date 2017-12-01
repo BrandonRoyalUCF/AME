@@ -191,9 +191,9 @@ class DepthProcessing():
         third = max(0, (second*2))
 
         firstMin = 0
-        firstMax = allDistances[second-1]
+        firstMax = allDistances[max(0, second-1)]
         secondMin = allDistances[second]
-        secondMax = allDistances[third-1]
+        secondMax = allDistances[max(0, third-1)]
         thirdMin = allDistances[third]
 
         #print(allDistances)
