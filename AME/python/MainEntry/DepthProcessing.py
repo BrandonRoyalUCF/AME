@@ -144,7 +144,7 @@ class DepthProcessing():
 
         degreesPerPixel = .0108
 
-        f = open('distanceLog.txt', "w+")
+        f = open(self.meeting.getMeetingDirectory() + '\\distanceLog.txt', "w+")
 
         numStudents = len(croppedList)
         distanceMatrix = [[0 for x in range(numStudents)] for y in range(numStudents)]
@@ -157,7 +157,7 @@ class DepthProcessing():
                 finalDistanceBetween = self.getActualDistanceBetweenFaces(face.getDistanceFromCamera(), otherFace.getDistanceFromCamera(), theta)
                 distanceMatrix[face.getId()][otherFace.getId()] = finalDistanceBetween
                 #print(pixelsBetween, theta)
-                f.write("Distance Between Cropped Face " + str(face.getId()) + " and Cropped Face " + str(otherFace.getId()) + " is " + str(finalDistanceBetween))
+                f.write("Distance Between Cropped Face " + str(face.getId()) + " and Cropped Face " + str(otherFace.getId()) + " is " + str(finalDistanceBetween)+"\n")
                 #print()
 
             

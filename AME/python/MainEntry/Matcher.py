@@ -458,6 +458,7 @@ class Matcher():
             if(countMatched == numberTotalStudents):
                     break
             if(alreadyMatchedCropped[i] == True):
+                    arrayMatchesLeft[i] -= 1
                     continue
             while(arrayMatchesLeft[i] > 0):
                 if(countMatched == numberTotalStudents):
