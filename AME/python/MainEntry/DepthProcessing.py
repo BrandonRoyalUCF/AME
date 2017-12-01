@@ -155,8 +155,9 @@ class DepthProcessing():
                 finalDistanceBetween = self.getActualDistanceBetweenFaces(face.getDistanceFromCamera(), otherFace.getDistanceFromCamera(), theta)
                 distanceMatrix[face.getId()][otherFace.getId()] = finalDistanceBetween
                 #print(pixelsBetween, theta)
-                #print("Distance Between " + str(face.getId()) + " and " + str(otherFace.getId()) + " is " + str(finalDistanceBetween))
+                print("Distance Between Cropped Face " + str(face.getId()) + " and Cropped Face " + str(otherFace.getId()) + " is " + str(finalDistanceBetween))
                 #print()
+
             
 
         return distanceMatrix
