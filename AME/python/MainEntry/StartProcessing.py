@@ -25,7 +25,7 @@ class StartProcessing():
             print(confidenceMatrix[i])
 
         useDelete = True
-        useSocial = False
+        useSocial = True
         matcher = Matcher(self.meeting, self.arrayStudents)
         attendance = matcher.matchStudents(confidenceMatrix, useDelete, useSocial)
         output = Output(self.meeting, self.arrayStudents, self.meeting.getCroppedFaces(), attendance)
