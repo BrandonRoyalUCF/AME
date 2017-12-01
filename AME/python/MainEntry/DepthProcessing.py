@@ -173,12 +173,13 @@ class DepthProcessing():
 
 
     def normalizeSocialData(self, distanceMatrix):
+        numStudents = len(distanceMatrix)
         normalizedMatrix = [[0 for x in range(numStudents)] for y in range(numStudents)]
         
         if(numStudents == 1):
             return normalizedMatrix
         
-        numStudents = len(distanceMatrix)
+        
         allDistances = []
 
         #put all distances inside a one dimensional array
