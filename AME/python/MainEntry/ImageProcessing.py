@@ -168,7 +168,7 @@ class ImageProcessing():
             confMatrix.append(getMinConf)
             getMinConf = []  #empty the list
 
-            f.write("Matched Cropped Face" + str(numActual) + " to Student " + str(numPredicted) + " with confidence of: " + str(conf))
+            f.write("Matched Cropped Face" + str(numActual) + " to Student " + str(numPredicted) + " with confidence of: " + str(conf) + "\n")
 
             baseAttendanceDict[i] = numPredicted
             if numActual == numPredicted:
