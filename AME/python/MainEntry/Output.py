@@ -79,7 +79,12 @@ class Output():
         print("First Social Matrix")
         print(croppedMatrix)
 
+        
+
         finalMatches = self.meeting.getFinalMatches()
+        print("Final Matches")
+        print(finalMatches)
+        
         for i in range(len(croppedMatrix)):
             if(finalMatches[i] == -1):
                 continue
