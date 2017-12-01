@@ -187,8 +187,8 @@ class DepthProcessing():
 
         #find the three partitions of the array
         first = 0
-        second = int(((numStudents*numStudents) - numStudents)/3)
-        third = (second*2)
+        second = max(0, int(((numStudents*numStudents) - numStudents)/3))
+        third = max(0, (second*2))
 
         firstMin = 0
         firstMax = allDistances[second-1]
