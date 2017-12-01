@@ -458,7 +458,6 @@ class Matcher():
             if(countMatched == numberTotalStudents):
                     break
             if(alreadyMatchedCropped[i] == True):
-                    arrayMatchesLeft[i] -= 1
                     continue
             while(arrayMatchesLeft[i] > 0):
                 if(countMatched == numberTotalStudents):
@@ -471,6 +470,7 @@ class Matcher():
                 #    break
 
                 #print('top matches', topMatches)
+                print(topMatches[i])
                 topMatch = topMatches[i][0]
                 #print("for cropped face " + str(i) + " we are considering student " + str(topMatch))
                 if(alreadyMatchedPortrait[topMatch] == True):
