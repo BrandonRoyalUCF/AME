@@ -34,10 +34,11 @@ class StartProcessing():
         count = 0
         for item in attendance:
             f.write('student: ' + str(count) + ' is found to be cropped face: ' + str(item))
-        
+
         #attendance to log without social data
         attendanceLogNoSocial = matcher.matchStudents(confidenceMatrix, useDelete, False)
         f = open('AttendanceNoSocial.txt', "w+")
+        count = 0
         for item in attendanceLogNoSocial:
             f.write('student: ' + str(count) + ' is found to be cropped face: ' + str(item))
 
