@@ -434,18 +434,19 @@ class Matcher():
                     alreadyMatchedPortrait[topMatch] = True
                     finalMatch[i] = topMatch
                     matchDictionary[topMatch] = i
-                    #set match for cropped face
-                    self.meeting.getCroppedFaces()[i].setStudentMatchClassNum(topMatch)
-                    self.meeting.getCroppedFaces()[i].setStudentMatchId(self.meeting.getClassNumToStudentIdDict()[topMatch])
-                    self.meeting.getCroppedFaces()[i].setRecognized(True)
-                    fullname = self.students[topMatch].getFullName()
-                    self.meeting.getCroppedFaces()[i].setStudentMatchFullName(fullname)
-                    #set match for student
-                    #NEED TO SET MATCHED SOCIAL ARRAY, THIS WAY ALL MATCHED STUDENTS WILL HAVE A MATCHED SOCIAL ARRAY BUT IF A STUDENT IS ABSENT IT WILL BE 
-                    #AN EMPTY ARRAY AND WE CAN THEN INSTEAD USE THE PREVIOUS AVERAGED SOCIAL DATA INPLACE TO NOT RUIN THE CURRENT SOCIAL AVERAGE
-                    self.students[topMatch].setPresent(True)
-                    self.students[topMatch].setCroppedFaceMatchId(i)
-                    self.students[topMatch].setCroppedFaceMatchPath(self.meeting.getCroppedFaces()[i].getCroppedImagePath())
+                    if(useSocial == true):
+                        #set match for cropped face
+                        self.meeting.getCroppedFaces()[i].setStudentMatchClassNum(topMatch)
+                        self.meeting.getCroppedFaces()[i].setStudentMatchId(self.meeting.getClassNumToStudentIdDict()[topMatch])
+                        self.meeting.getCroppedFaces()[i].setRecognized(True)
+                        fullname = self.students[topMatch].getFullName()
+                        self.meeting.getCroppedFaces()[i].setStudentMatchFullName(fullname)
+                        #set match for student
+                        #NEED TO SET MATCHED SOCIAL ARRAY, THIS WAY ALL MATCHED STUDENTS WILL HAVE A MATCHED SOCIAL ARRAY BUT IF A STUDENT IS ABSENT IT WILL BE 
+                        #AN EMPTY ARRAY AND WE CAN THEN INSTEAD USE THE PREVIOUS AVERAGED SOCIAL DATA INPLACE TO NOT RUIN THE CURRENT SOCIAL AVERAGE
+                        self.students[topMatch].setPresent(True)
+                        self.students[topMatch].setCroppedFaceMatchId(i)
+                        self.students[topMatch].setCroppedFaceMatchPath(self.meeting.getCroppedFaces()[i].getCroppedImagePath())
                     print("Cropped Face " + str(i) + " is found to be student " + str(topMatch))
 
         print("done with initial delete")
@@ -515,22 +516,24 @@ class Matcher():
                     matchDictionary[topMatch] = i
                     alreadyMatchedCropped[i] = True
                     alreadyMatchedPortrait[topMatch] = True
-                    #set match for cropped face
-                    self.meeting.getCroppedFaces()[i].setStudentMatchClassNum(topMatch)
-                    self.meeting.getCroppedFaces()[i].setStudentMatchId(self.meeting.getClassNumToStudentIdDict()[topMatch])
-                    self.meeting.getCroppedFaces()[i].setRecognized(True)
-                    fullname = self.students[topMatch].getFullName()
-                    self.meeting.getCroppedFaces()[i].setStudentMatchFullName(fullname)
-                    #set match for student
-                    #NEED TO SET MATCHED SOCIAL ARRAY, THIS WAY ALL MATCHED STUDENTS WILL HAVE A MATCHED SOCIAL ARRAY BUT IF A STUDENT IS ABSENT IT WILL BE 
-                    #AN EMPTY ARRAY AND WE CAN THEN INSTEAD USE THE PREVIOUS AVERAGED SOCIAL DATA INPLACE TO NOT RUIN THE CURRENT SOCIAL AVERAGE
-                    self.students[topMatch].setPresent(True)
-                    self.students[topMatch].setCroppedFaceMatchId(i)
-                    self.students[topMatch].setCroppedFaceMatchPath(self.meeting.getCroppedFaces()[i].getCroppedImagePath())
+                    if(useSocial == True):
+                        #set match for cropped face
+                        self.meeting.getCroppedFaces()[i].setStudentMatchClassNum(topMatch)
+                        self.meeting.getCroppedFaces()[i].setStudentMatchId(self.meeting.getClassNumToStudentIdDict()[topMatch])
+                        self.meeting.getCroppedFaces()[i].setRecognized(True)
+                        fullname = self.students[topMatch].getFullName()
+                        self.meeting.getCroppedFaces()[i].setStudentMatchFullName(fullname)
+                        #set match for student
+                        #NEED TO SET MATCHED SOCIAL ARRAY, THIS WAY ALL MATCHED STUDENTS WILL HAVE A MATCHED SOCIAL ARRAY BUT IF A STUDENT IS ABSENT IT WILL BE 
+                        #AN EMPTY ARRAY AND WE CAN THEN INSTEAD USE THE PREVIOUS AVERAGED SOCIAL DATA INPLACE TO NOT RUIN THE CURRENT SOCIAL AVERAGE
+                        self.students[topMatch].setPresent(True)
+                        self.students[topMatch].setCroppedFaceMatchId(i)
+                        self.students[topMatch].setCroppedFaceMatchPath(self.meeting.getCroppedFaces()[i].getCroppedImagePath())
                     print("Cropped Face " + str(i) + " is found to be student " + str(topMatch))
                     break
-        self.meeting.setMatchDictionary(matchDictionary)
-        self.meeting.setFinalMatches(finalMatch)
+        if(useSocial == True):
+            self.meeting.setMatchDictionary(matchDictionary)
+            self.meeting.setFinalMatches(finalMatch)
         return finalMatch
 
 
