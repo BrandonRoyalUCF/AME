@@ -41,7 +41,7 @@ class StartProcessing():
         f = open(self.meeting.getMeetingDirectory() + '\AttendanceNoSocial.txt', "w+")
         count = 0
         for item in attendanceLogNoSocial:
-            f.write('student: ' + str(count) + ' is found to be cropped face: ' + str(item) + '\n')
+            f.write('student: ' + str(item) + ' is found to be cropped face: ' + str(count) + '\n')
             count = count + 1
 
         output = Output(self.meeting, self.arrayStudents, self.meeting.getCroppedFaces(), attendance)
