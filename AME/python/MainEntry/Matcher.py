@@ -337,7 +337,7 @@ class Matcher():
     ##############################################################
     def matchStudents(self, confidenceMatrix, useDelete, useSocial):
         
-        f = open('SocialDataAnalysis.txt', "w+")
+        f = open(meeting.getMeetingDirectory() + '\SocialDataAnalysis.txt', "w+")
 
         #this is number of faces retrieved from the class portrait picture
         numberCropped = len(confidenceMatrix)
@@ -486,14 +486,14 @@ class Matcher():
                         #print(topMatch, " ", curTopMatch)
                         if(topMatch == curTopMatch):
                             if(abs(confidenceMatrix[i][topMatch] - confidenceMatrix[j][curTopMatch]) <= closenessThreshold):
-                               f.write('Use Social for cropped face ' + str(i) + " vs cropped face " + str(j) + " to match to student " + str(topMatch))
+                               f.write('Use Social for cropped face ' + str(i) + " vs cropped face " + str(j) + " to match to student " + str(topMatch) + '\n')
                                socialResult = self.useSocial(self.meeting.getAverageSocialMatrix(), self.meeting.getUnrecognizedSocialMatrix(), i , j, confidenceMatrix[i][topMatch], confidenceMatrix[j][curTopMatch], topMatch, finalMatch)
                                if(socialResult == 1):
-                                   f.write("using social choose: " + str(i))
+                                   f.write("using social choose: " + str(i) + '\n')
                                    del topMatches[j][0]
                                    arrayMatchesLeft[j] = arrayMatchesLeft[j] - 1
                                elif(socialResult == 2):
-                                    f.write("using social choose: " + str(j))
+                                    f.write("using social choose: " + str(j) + '\n')
                                     del topMatches[i][0]
                                     arrayMatchesLeft[i] = arrayMatchesLeft[i] - 1
                                     deleted = True

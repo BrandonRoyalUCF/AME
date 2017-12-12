@@ -30,17 +30,17 @@ class StartProcessing():
 
         #attendance with social data
         attendance = matcher.matchStudents(confidenceMatrix, useDelete, useSocial)
-        f = open('AttendanceSocial.txt', "w+")
+        f = open(meeting.getMeetingDirectory() + '\AttendanceSocial.txt', "w+")
         count = 0
         for item in attendance:
-            f.write('student: ' + str(count) + ' is found to be cropped face: ' + str(item))
+            f.write('student: ' + str(count) + ' is found to be cropped face: ' + str(item) + '\n')
 
         #attendance to log without social data
         attendanceLogNoSocial = matcher.matchStudents(confidenceMatrix, useDelete, False)
-        f = open('AttendanceNoSocial.txt', "w+")
+        f = open(meeting.getMeetingDirectory() + '\AttendanceNoSocial.txt', "w+")
         count = 0
         for item in attendanceLogNoSocial:
-            f.write('student: ' + str(count) + ' is found to be cropped face: ' + str(item))
+            f.write('student: ' + str(count) + ' is found to be cropped face: ' + str(item) + '\n')
 
         output = Output(self.meeting, self.arrayStudents, self.meeting.getCroppedFaces(), attendance)
         imageOrginalWithAttedance, imageAttendancePath = output.createAndWriteAttendacePiture("Matching")
