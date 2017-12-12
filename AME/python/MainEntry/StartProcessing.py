@@ -27,9 +27,23 @@ class StartProcessing():
         useDelete = True
         useSocial = True
         matcher = Matcher(self.meeting, self.arrayStudents)
+
+        #attendance with social data
         attendance = matcher.matchStudents(confidenceMatrix, useDelete, useSocial)
+        f = open('AttendanceSocial.txt', "w+")
+        f.write(attendance)
+
+        #attendance to log without social data
+        attendanceLogNoSocial = matcher.matchStudents(confidenceMatrix, useDelete, False)
+        f = open('AttendanceNoSocial.txt', "w+")
+        f.write(attendanceLogNoSocial)
+
         output = Output(self.meeting, self.arrayStudents, self.meeting.getCroppedFaces(), attendance)
         imageOrginalWithAttedance, imageAttendancePath = output.createAndWriteAttendacePiture("Matching")
+
+        
+
+        
         
         
         #write the attedance picture to the db
