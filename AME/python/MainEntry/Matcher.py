@@ -337,7 +337,7 @@ class Matcher():
     ##############################################################
     def matchStudents(self, confidenceMatrix, useDelete, useSocial):
         
-        f = open('SocialDataAnalysis.txt', "w+");
+        f = open('SocialDataAnalysis.txt', "w+")
 
         #this is number of faces retrieved from the class portrait picture
         numberCropped = len(confidenceMatrix)

@@ -31,20 +31,17 @@ class StartProcessing():
         #attendance with social data
         attendance = matcher.matchStudents(confidenceMatrix, useDelete, useSocial)
         f = open('AttendanceSocial.txt', "w+")
-        f.write(attendance)
+        strAtt = ''.join(attendance)
+        f.write(strAtt)
 
         #attendance to log without social data
         attendanceLogNoSocial = matcher.matchStudents(confidenceMatrix, useDelete, False)
         f = open('AttendanceNoSocial.txt', "w+")
-        f.write(attendanceLogNoSocial)
+        strAttNoSocial = ''.join(attendanceLogNoSocial)
+        f.write(strAttNoSocial)
 
         output = Output(self.meeting, self.arrayStudents, self.meeting.getCroppedFaces(), attendance)
         imageOrginalWithAttedance, imageAttendancePath = output.createAndWriteAttendacePiture("Matching")
-
-        
-
-        
-        
         
         #write the attedance picture to the db
         self.database.writeImageWithAttendance(self.db, imageOrginalWithAttedance, self.meeting.getMeetingDirectory(), imageAttendancePath)
