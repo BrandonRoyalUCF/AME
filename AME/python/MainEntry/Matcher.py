@@ -434,7 +434,7 @@ class Matcher():
                     alreadyMatchedPortrait[topMatch] = True
                     finalMatch[i] = topMatch
                     matchDictionary[topMatch] = i
-                    if(useSocial == true):
+                    if(useSocial == True):
                         #set match for cropped face
                         self.meeting.getCroppedFaces()[i].setStudentMatchClassNum(topMatch)
                         self.meeting.getCroppedFaces()[i].setStudentMatchId(self.meeting.getClassNumToStudentIdDict()[topMatch])
