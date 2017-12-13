@@ -19,7 +19,7 @@ class StartProcessing():
     def begin(self):
         #print("Starting processing")
         imageProcessor = ImageProcessing(self.meeting, self.arrayStudents, self.size)
-        confidenceMatrix = imageProcessor.processImageAndGetConfidenceMatrix()
+        confidenceMatrix, baseAttendaceDict = imageProcessor.processImageAndGetConfidenceMatrix()
         print("done confidence:")
         for i in range(len(confidenceMatrix)):
             print(confidenceMatrix[i])
@@ -37,15 +37,21 @@ class StartProcessing():
             count = count + 1
 
         #attendance to log without social data
-        attendanceLogNoSocial = matcher.matchStudents(confidenceMatrix, useDelete, False)
+        attendanceNoSocial = matcher.matchStudents(confidenceMatrix, useDelete, False)
         f = open(self.meeting.getMeetingDirectory() + '\AttendanceNoSocial.txt', "w+")
         count = 0
-        for item in attendanceLogNoSocial:
+        for item in attendanceNoSocial:
             f.write('student: ' + str(item) + ' is found to be cropped face: ' + str(count) + '\n')
             count = count + 1
 
         output = Output(self.meeting, self.arrayStudents, self.meeting.getCroppedFaces(), attendance)
-        imageOrginalWithAttedance, imageAttendancePath = output.createAndWriteAttendacePiture("Matching")
+        imageOrginalWithAttedance, imageAttendancePath = output.createAndWriteAttendacePiture("MatchingWithSocial")
+
+        #create attendace picture for social not used
+        output.createAndWriteAttendancePictureTwo("MatchingNoSocial", attendanceNoSocial)
+
+        #create attendance picture for base recognition
+        output.createAndWriteAttendancePictureTwo("BaseRecognition", baseAttendaceDict)
         
         #write the attedance picture to the db
         self.database.writeImageWithAttendance(self.db, imageOrginalWithAttedance, self.meeting.getMeetingDirectory(), imageAttendancePath)

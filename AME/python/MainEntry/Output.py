@@ -32,6 +32,25 @@ class Output():
         cv2.imwrite(path, imageOrginalWithAttedance)
         return imageOrginalWithAttedance, path
 
+    def createAndWriteAttendancePictureTwo(self, appendToName, attendanceList):
+        imageOrginal = cv2.imread(self.meeting.getMeetingPicPath())
+        imageOrginalWithAttedance = imageOrginal.copy()
+
+        i = 0
+        for cropped in self.croppedFaces:
+            x, y, w, h = cropped.getOrginalCoordinates()
+            imageOrginalWithAttedance = cv2.rectangle(imageOrginalWithAttedance, (x, y), (x+w, y+h), (0, 255, 0), 5)
+            
+            if(attendanceList[i] == -1):
+                fullname = "Does Not Belong"
+            else:
+                fullname = self.students[attendanceList[i]].getFullName()
+            i += 1
+            imageOrginalWithAttedance = cv2.putText(imageOrginalWithAttedance, fullname, (x,y-10), cv2.FONT_HERSHEY_COMPLEX, 1.1, (0, 255, 255), 3)
+        path = self.meeting.getMeetingDirectory() + "//attendace_results" + appendToName + ".jpg"
+        cv2.imwrite(path, imageOrginalWithAttedance)
+
+
     def printAttendance(self):
         for student in self.students:
             if(student.getPresent() == True):
