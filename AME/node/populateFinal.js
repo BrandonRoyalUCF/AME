@@ -166,19 +166,6 @@ mongoose.connection.on('open', function() {
                                     }
                                 )
                                 
-                                Attachment.write({
-                                    filename: (student.studentID) + "d.jpg",
-                                    contentType: 'image/jpg'
-                                    },
-                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'d.jpg'),
-                                    function(error, createdFileD){
-                                        Student.updateOne({_id: student._id},
-                                                          {$push: {studentPortraitAttachment_ids: createdFileD._id}},
-                                                          function(err){
-                                                              console.log(err)
-                                                          })
-                                    }
-                                )
 
                             });
                         }
