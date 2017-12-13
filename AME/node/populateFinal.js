@@ -80,7 +80,7 @@ mongoose.connection.on('open', function() {
                                     },
                                     fs.createReadStream('C:/AME/AME/node/MeetingPic/depthPic.jpg'),
                                     function(error, depthPic){
-                                        var newMeeting = new Meeting({
+                                        /*var newMeeting = new Meeting({
                                             dateTime: '',
                                             meetingPicAttachment_id: meetingPic._id,
                                             depthPicAttachment_id: depthPic._id,
@@ -92,7 +92,7 @@ mongoose.connection.on('open', function() {
                                         
                                         newMeeting.save(function(err, meeting){
                                             
-                                        })
+                                        })*/
                                     }
                                 )
                             }
@@ -160,6 +160,20 @@ mongoose.connection.on('open', function() {
                                     function(error, createdFileC){
                                         Student.updateOne({_id: student._id},
                                                           {$push: {studentPortraitAttachment_ids: createdFileC._id}},
+                                                          function(err){
+                                                              console.log(err)
+                                                          })
+                                    }
+                                )
+                                
+                                Attachment.write({
+                                    filename: (student.studentID) + "d.jpg",
+                                    contentType: 'image/jpg'
+                                    },
+                                    fs.createReadStream('C:/AME/AME/node/CroppedFinalFaces/' + (student.studentID)+'d.jpg'),
+                                    function(error, createdFileD){
+                                        Student.updateOne({_id: student._id},
+                                                          {$push: {studentPortraitAttachment_ids: createdFileD._id}},
                                                           function(err){
                                                               console.log(err)
                                                           })
