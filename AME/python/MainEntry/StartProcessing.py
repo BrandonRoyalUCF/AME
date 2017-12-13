@@ -29,7 +29,7 @@ class StartProcessing():
         matcher = Matcher(self.meeting, self.arrayStudents)
 
         #attendance with social data
-        attendance = matcher.matchStudents(confidenceMatrix, useDelete, useSocial)
+        attendance = matcher.matchStudents(confidenceMatrix, False, useSocial)
         f = open(self.meeting.getMeetingDirectory() + '\AttendanceSocial.txt', "w+")
         count = 0
         for item in attendance:
