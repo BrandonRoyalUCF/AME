@@ -350,7 +350,7 @@ class Matcher():
         minConfidence = 200
         topMatchesTaken = numberTotalStudents
         if(useSocial == True):
-            closenessThreshold = 5
+            closenessThreshold = 10
         else:
             closenessThreshold = -1
 
