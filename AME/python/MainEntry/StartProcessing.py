@@ -37,7 +37,7 @@ class StartProcessing():
             count = count + 1
 
         #attendance to log without social data
-        attendanceNoSocial = matcher.matchStudents(confidenceMatrix, useDelete, False)
+        attendanceNoSocial = matcher.matchStudents(confidenceMatrix, False, False)
         f = open(self.meeting.getMeetingDirectory() + '\AttendanceNoSocial.txt', "w+")
         count = 0
         for item in attendanceNoSocial:
